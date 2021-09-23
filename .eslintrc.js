@@ -13,5 +13,10 @@ module.exports = {
     rules: {
         'no-unused-vars': 'off',
         'no-console': 'off',
+        'consistent-return': 'off',
+        'no-plusplus': 'off',
+        'no-unused-expressions': 'off',
+        'no-param-reassign': 'off',
+        'no-debugger': 'off',
     },
 };
