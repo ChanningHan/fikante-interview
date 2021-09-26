@@ -32,7 +32,7 @@ function test(func) {
         { input: { m: 3, n: 1, k: 0 }, output: 1 },
         { input: { m: 1, n: 2, k: 1 }, output: 2 },
     ];
-    testArr.slice(2).forEach((item, index) => {
+    testArr.slice(0).forEach((item, index) => {
         const { m, n, k } = item.input;
         const res = func(m, n, k);
         console.log(`test${index + 1}, res: ${res},output:${item.output}`);
@@ -83,4 +83,44 @@ function movingCount1(m, n, k) {
     return dfs(0, 0);
 }
 
-test(movingCount1);
+// test(movingCount1);
+
+/**
+ * @description BFS广度优先遍历。
+ * 初始化时将当(0,0)加入queue队列，res为0，记录符合条件的元素个数
+ * 迭代工作：队首元素弹出，若下标越界或已访问过则跳过本次迭代，
+ * 将当前元素放入visited set，
+ * 若其数位和大于k，则跳过本次迭代，
+ * res++，
+ * 将其下、右元素加入queue队列，完成一次迭代。
+ * 迭代终止条件：queue队列为空。
+ * 返回res
+ * @param {number} m
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+function movingCount2(m, n, k) {
+    if (m < 0 || n < 0 || k < 0) {
+        console.log('wrong param');
+        return 0;
+    }
+
+    const visited = new Set();
+    const queue = [[0, 0]];
+    let res = 0;
+    while (queue.length) {
+        const item = queue.shift();
+        const [row, column] = item;
+        if (row < 0 || row >= m || column < 0 || column >= n) continue;
+        if (visited.has(`${row},${column}`)) continue;
+        visited.add(`${row},${column}`);
+        if (getSum(row) + getSum(column) > k) continue;
+        res++;
+        queue.push([row + 1, column], [row, column + 1]);
+    }
+
+    return res;
+}
+
+test(movingCount2);
