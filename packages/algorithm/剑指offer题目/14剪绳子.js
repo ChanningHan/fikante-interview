@@ -54,6 +54,7 @@ function cuttingRope1(n) {
         console.log('wrong input: ', n);
         return 0;
     }
+    // 因为至少剪一刀
     if (n === 2) {
         return 1;
     }
@@ -79,3 +80,36 @@ function cuttingRope1(n) {
 }
 
 test(cuttingRope1);
+
+/**
+ * @description 贪心算法，当长度>=5时，尽可能剪出长度为3的绳子，n>=5时，易证2(n-2)>n且3(n-3)>n，且3(n-3)>=2(n-2)，
+ * 因此当长度>=5时尽量剪出长度为3的绳子。
+ * 为什么不是4，因为长度为4的绳子不剪已经是最大值4，因此没必要剪，至少题目至少要剪一刀。
+ * @param {number} n
+ * @return {number}
+ */
+function cuttingRope2(n) {
+    if (n < 2) {
+        console.log('wrong input: ', n);
+        return 0;
+    }
+    // 因为至少剪一刀
+    if (n === 2) {
+        return 1;
+    }
+    if (n === 3) {
+        return 2;
+    }
+    let timesOf3 = ~~(n / 3);
+
+    // 当最后剩下长度为4时，不需要剪成3，1,此时最好的减法是剪两段2
+    if (n - timesOf3 * 3 === 1) {
+        timesOf3 -= 1;
+    }
+
+    const timesOf2 = ~~((n - timesOf3 * 3) / 2);
+
+    return 3 ** timesOf3 * 2 ** timesOf2;
+}
+
+test(cuttingRope2);
