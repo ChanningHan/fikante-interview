@@ -16,12 +16,10 @@ n 为正整数
  * */
 
 function test(func) {
-    const testArr = [
-        {
-            input: 1,
-            output: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        },
-    ];
+    const testArr = [{
+        input: 1,
+        output: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    }, ];
     let passCount = 0;
     testArr.forEach((item, index) => {
         const res = func(item.input);
@@ -98,4 +96,40 @@ function printNumbers(n) {
     return res;
 }
 
-test(printNumbers);
+// test(printNumbers);
+
+
+
+
+/**
+ * @description 使用递归的方式打印数字，从第0位开始递归，遍历0~9这十个数字，每个数字再往下递归，直到层级为n-1则打印该数字。
+ * @param {number} n 
+ */
+function printNumbers2(n) {
+    const numArr = []
+    const res = []
+
+    function generateNewNumber(index) {
+
+        let isLast = index === n - 1
+
+        for (let i = 0; i <= 9; i++) {
+            numArr[index] = i
+
+
+            if (isLast) {
+                const numRes = getNumberStrFromArr(numArr) - 0
+                numRes && res.push(numRes)
+                continue;
+            }
+            generateNewNumber(index + 1)
+        }
+    }
+
+    generateNewNumber(0)
+
+    return res
+
+}
+
+test(printNumbers2)
