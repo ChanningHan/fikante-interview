@@ -167,4 +167,55 @@ var isMatch = function(s, p) {
     return matchCore(s.length - 1, p.length - 1)
 };
 
-test(isMatch)
+// test(isMatch)
+
+
+/**
+ * @description 动态规划。如果p最后一个字符p[j]是正常字符，则看s最后一个字符s[i]是否与之相等，不相等则不匹配，相等则是s0...i-1和p0...j-1是否匹配的子问题（简写为f[i-1][j-1]）。
+ * 如果p最后一个字符是"."，那么可以匹配任何字符，直接变为子问题f[i-1][j-1]。
+ * 如果p最后一个字符是"*"，则需要将*前一位的字符打包进来成为一个整体来看待，则此时有两种选择：不匹配这个整体，匹配这个整体1次以上，
+ * 则变成子问题f[i][j-2]或f[i-1][j-2]，使用递归的方式选择其中一个先进行下去，如果子问题为false则选择第二种方式进行下去，
+ * 如果都为false则说明匹配失败，因此这两种使用或||来表达我们的这种选择方式。
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ */
+var isMatch2 = function(s, p) {
+    function match(i, j) {
+        if (i === 0) {
+            return false
+        }
+        if (p[j - 1] === '.') {
+            return true
+        }
+        return s[i - 1] === p[j - 1]
+    }
+    const f = []
+    for (let i = 0; i <= s.length; i++) {
+        f.push([])
+        for (let j = 0; j <= p.length; j++) {
+            f[i].push(undefined)
+        }
+    }
+    f[0][0] = true
+    for (let i = 0; i <= s.length; i++) {
+        for (let j = 1; j <= p.length; j++) {
+            if (p[j - 1] === '*') {
+                f[i][j] = f[i][j - 2]
+                if (match(i, j - 1)) {
+                    f[i][j] = f[i][j] || f[i - 1][j]
+                }
+            } else {
+                if (match(i, j)) {
+                    f[i][j] = f[i - 1][j - 1]
+                } else {
+                    f[i][j] = false
+                }
+            }
+        }
+
+    }
+    return f[s.length][p.length]
+}
+
+test(isMatch2)
