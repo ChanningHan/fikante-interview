@@ -49,8 +49,126 @@
 1 <= s.length <= 20
 s 仅含英文字母（大写和小写），数字（0-9），加号 '+' ，减号 '-' ，空格 ' ' 或者点 '.' 。
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  *
  * */
+
+function test(fn) {
+    const inputArr = [
+        '0',
+        'e',
+        '.',
+        '.1',
+        '+100',
+        '5e2',
+        '-123',
+        '3.1416',
+        '-1E-16',
+        '0123',
+        '12e',
+        '1a3.14',
+        '1.2.3',
+        '+-5',
+        '12e+5.4',
+        ' ',
+    ];
+    const outputArr = [
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    ];
+
+    let passCount = 0;
+    inputArr.forEach((item, index) => {
+        if (index === inputArr.length - 1) debugger;
+        const res = fn(item);
+        const isPass = res === outputArr[index];
+        isPass && passCount++;
+        console.log(`test${index + 1}, res:${res},input:${item},output:${outputArr[index]}`);
+        console.log(isPass ? 'pass' : 'fail');
+    });
+    console.log(`total pass: ${passCount} / ${inputArr.length}`);
+}
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+function isNumber(s) {
+    let cursor = 0;
+
+    // 扫描无符号整数
+    function scanUnsignedInteger() {
+        const lastCursor = cursor;
+        while (s[cursor] >= '0' && s[cursor] <= '9') {
+            cursor++;
+        }
+        return cursor > lastCursor;
+    }
+
+    // 扫描有符号整数
+    function scanInteger() {
+        if (s[cursor] === '+' || s[cursor] === '-') {
+            cursor++;
+        }
+        return scanUnsignedInteger();
+    }
+
+    // 扫描空格
+    function scanSpace() {
+        const lastCursor = cursor;
+        while (s[cursor] === ' ') {
+            cursor++;
+        }
+        return cursor > lastCursor;
+    }
+
+    // 空格
+    if (s[cursor] === ' ') {
+        scanSpace(s);
+    }
+
+    // A整数部分
+    const hasInteger = scanInteger();
+    let hasFraction;
+    // 数字是否合法
+    let isLegal = hasInteger;
+
+    // A小数部分
+    if (s[cursor] === '.') {
+        cursor++;
+        hasFraction = scanUnsignedInteger();
+        // 既没有整数部分又没有小数部分则错误
+        if (!hasInteger && !hasFraction) {
+            return false;
+        }
+        isLegal = true;
+    }
+
+    // 指数
+    if (s[cursor] === 'e' || s[cursor] === 'E') {
+        cursor++;
+        if (!scanInteger()) return false;
+    }
+
+    // 空格
+    if (s[cursor] === ' ') {
+        scanSpace();
+    }
+
+    return cursor === s.length && isLegal;
+}
+
+test(isNumber);
