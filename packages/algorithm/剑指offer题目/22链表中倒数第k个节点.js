@@ -38,6 +38,7 @@ var getKthFromEnd = function(head, k) {
     for (let i = 0; i < k - 1; i++) {
         fastP = fastP.next
     }
+    if (fastP === null) throw new Error('k longger than list')
     while (fastP.next !== null) {
         fastP = fastP.next
         slowP = slowP.next
