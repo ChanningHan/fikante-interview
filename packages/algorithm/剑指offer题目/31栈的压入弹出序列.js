@@ -67,6 +67,29 @@ function validateStackSequences(pushed, popped) {
     return true
 };
 
+/**
+ * @description 弹出一个数时，检查栈顶的数是否等于这个数，如果是则弹出，如果不是先按照压入序列将数逐个压入栈，直到压入的数等于弹出的这个数，再弹出这个数，
+ * 如果所有都压入了但仍没有数与要弹出的数相等则不可能是弹出序列，返回false。
+ * @param {number[]} pushed
+ * @param {number[]} popped
+ * @return {boolean}
+ */
+function validateStackSequences2(pushed, popped) {
+    if (!popped.length) return true
+    if (!pushed.length || pushed.length !== popped.length) return false
+
+    const stack = []
+    let popIndex = 0;
+    for (let i = 0; i < pushed.length; i++) {
+        stack.push(pushed[i])
+        while (stack.length && stack[stack.length - 1] === popped[popIndex]) {
+            stack.pop()
+            popIndex++
+        }
+    }
+    return !stack.length
+}
+
 function test() {
 
     //     [1,2,3,4,5], popped = [4,5,3,2,1]
@@ -102,7 +125,7 @@ function test() {
 
     testArr.forEach((item, index) => {
         console.log(`test${index+1}, ${JSON.stringify(item)}`)
-        const res = validateStackSequences(item.input.pushed, item.input.popped)
+        const res = validateStackSequences2(item.input.pushed, item.input.popped)
         console.log('res', res);
         console.log(res === item.output ? 'pass' : 'fail');
     })
