@@ -37,28 +37,19 @@ function TreeNode(val) {
  * @return {string}
  */
 var serialize = function(root) {
-    let treeStr = ''
-    const arr = []
+    const dataArray = []
 
     function recursive(node) {
         if (!node) {
-            // treeStr += '$'
-            arr.push('$')
+            dataArray.push('$')
             return;
         }
 
-        // treeStr += `${treeStr?',':''}${node.val}`
-        // treeStr += `${treeStr?',':''}${node.val}`
-        arr.push(node.val)
+        dataArray.push(node.val)
         recursive(node.left)
         recursive(node.right)
     }
-
-
-
     recursive(root)
-
-    // return treeStr
     return arr.join(',')
 };
 
@@ -70,11 +61,11 @@ var serialize = function(root) {
  */
 var deserialize = function(data) {
     if (!data) return null
-    const dataArr = data.split(',')
+    const dataArray = data.split(',')
     let dataIndex = 0;
 
     function recursive() {
-        const val = dataArr[dataIndex]
+        const val = dataArray[dataIndex]
         if (val === undefined || val === '$') return null;
 
         const node = new TreeNode(val)
