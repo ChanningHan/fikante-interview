@@ -191,4 +191,38 @@ function test(fn) {
     });
 }
 
-test(majorityElement);
+// test(majorityElement);
+
+/**
+ * @description 解法二，Boyer-Moore 投票法。
+ * 先将第一个数设为候选人，且票数为1。
+ * 然后遍历数组，遇到不同的数则减1，相同的数则减1。
+ * 当票数为0时，下一次遍历将那个数设为新的候选人，且票数为1。
+ * 当遍历结束时，候选人即为期望的数，因为出现次数大于一半的数字候选人票数必然>=1。
+ *
+ * @param {number[]} nums
+ * @return {number}
+ */
+function majorityElement2(nums) {
+    if (checkInvalidArray(nums)) throw new Error('arr is empty');
+    let candidate = nums[0];
+    let votes = 1;
+
+    for (let i = 1; i < nums.length; i++) {
+        if (votes === 0) {
+            candidate = nums[i];
+            votes = 1;
+            continue;
+        }
+
+        if (nums[i] === candidate) {
+            votes++;
+        } else {
+            votes--;
+        }
+    }
+
+    return candidate;
+}
+
+test(majorityElement2);
