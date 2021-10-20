@@ -65,3 +65,161 @@ MedianFinder.prototype.findMedian = function() {
  * obj.addNum(num)
  * var param_2 = obj.findMedian()
  */
+
+
+/**
+ * @description 通过二分查找的方式插入新数，这样可以保证数组是排序的，
+ * 且在查找中位数时不需要排序，可以在O(1)的时间复杂度下找到中位数。
+ * 
+ */
+class MedianFinder2 {
+    nums = []
+
+    /**
+     * 
+     * @param {number} num 
+     */
+    addNum(num) {
+        if (!this.nums.length) {
+            this.nums.push(num);
+            return
+        }
+        let start = 0;
+        let end = this.nums.length - 1
+
+        while (start < end) {
+            const midIndex = (end - start >> 1) + start
+            const midNum = this.nums[midIndex]
+
+            if (num < midNum) {
+                end = midIndex - 1
+            } else if (num > midNum) {
+                start = midIndex + 1
+            } else {
+                start = midIndex
+                break
+            }
+        }
+
+        if (this.nums[start] - num > 0) {
+            this.nums.splice(start, 0, num)
+        } else {
+            this.nums.splice(start + 1, 0, num)
+        }
+
+    }
+
+    /**
+     * 
+     * @returns {number}
+     */
+    findMedian() {
+        if (this.nums.length === 0) return null
+        const mid = this.nums.length >> 1
+        if (this.nums.length % 2 === 0) {
+            return (this.nums[mid] + this.nums[mid - 1]) / 2
+        } else {
+            return this.nums[mid]
+        }
+    }
+}
+
+function test(MedianFinder) {
+    const testArr = [{
+            ins: ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"],
+            input: [
+                [],
+                [1],
+                [2],
+                [],
+                [3],
+                []
+            ],
+            output: [null, null, null, 1.50000, null, 2.00000]
+        },
+        {
+            ins: ["MedianFinder", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian"],
+            input: [
+                [],
+                [12],
+                [],
+                [10],
+                [],
+                [13],
+                [],
+                [11],
+                [],
+                [5],
+                [],
+                [15],
+                [],
+                [1],
+                [],
+                [11],
+                [],
+                [6],
+                [],
+                [17],
+                [],
+                [14],
+                [],
+                [8],
+                [],
+                [17],
+                [],
+                [6],
+                [],
+                [4],
+                [],
+                [16],
+                [],
+                [8],
+                [],
+                [10],
+                [],
+                [2],
+                [],
+                [12],
+                [],
+                [0],
+                []
+            ],
+            output: [null, null, 12.0, null, 11.0, null, 12.0, null, 11.5, null, 11.0, null, 11.5, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 10.5, null, 10.0, null, 10.5, null, 10.0]
+        },
+
+    ].slice(1)
+
+
+
+
+    let medianFinder = null
+
+    const insMap = {
+        'MedianFinder': () => {
+            medianFinder = new MedianFinder()
+            return null
+        },
+        "addNum": (num) => {
+            medianFinder.addNum(num)
+            return null
+        },
+        "findMedian": () => {
+            return medianFinder.findMedian()
+        }
+    }
+
+
+
+    testArr.forEach((item, index) => {
+        console.log(`test ${index+1}, ${JSON.stringify(item)}`);
+        const res = []
+        item.ins.forEach((i, index) => {
+            res.push(insMap[i](item.input[index][0]))
+        })
+        console.log('res', res);
+        const isFail = res.some((i, index) => i !== item.output[index])
+        console.log(isFail ? 'fail' : 'pass');
+    })
+}
+
+test(MedianFinder2)
