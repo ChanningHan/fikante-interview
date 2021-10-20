@@ -124,6 +124,125 @@ class MedianFinder2 {
     }
 }
 
+
+class Heap {
+    nums = []
+    compare
+    constructor(compare) {
+        this.compare = compare
+    }
+
+    get length() {
+        return this.nums.length
+    }
+
+    insert(num) {
+
+    }
+
+    /**
+     * @return {number}
+     */
+    extract() {
+
+    }
+
+    /**
+     * @return {number}
+     */
+    top() {
+
+    }
+}
+
+class MinHeap extends Heap {
+    constructor() {
+        super((a, b) => a - b)
+    }
+}
+
+class MaxHeap extends Heap {
+    constructor() {
+        super((a, b) => b - a)
+    }
+}
+
+/**
+ * @description 用一个最小堆和一个最大堆将数据流中的数据分两部分存储。
+ * 左半部分用最大堆，右半部分用最小堆存储，且左半部分的值一定小于或等于右半部分的最小值。
+ * 同时要保证两个堆的元素个数相等或左半部分比右半部分多1（反过来也行，但要保证统一哪边可能会多1）。
+ * 插入数据时，根据两个堆的数量决定这次要在哪个堆中插入数据，
+ * 哪边少插哪边，
+ * 如果俩个堆数量相等，则插入左边的最大堆。
+ * 此外，插入时需要先比较这个数是否比最小堆的最小数还要大，
+ * 如果是则将最小堆的数取出并插入到最大堆，再将该数插入最小堆，
+ * 如果比最小堆的最小数还要小，则可直接插入到最大堆中。
+ * 
+ * 取中间数时，如果两个堆数量不一致，则取左边的最大堆的堆顶元素（哪边多取哪边），
+ * 如果两个堆的数量相同，则各取两个堆的堆顶元素相加取平均值。
+ */
+class MedianFinder3 {
+    minHeap = new MinHeap()
+    maxHeap = new MaxHeap()
+
+    addNum(num) {
+        if (this.maxHeap.length <= this.minHeap.length) {
+            if (num > this.minHeap.top()) {
+                this.maxHeap.insert(this.minHeap.extract())
+                this.minHeap.insert(num)
+            } else {
+                this.maxHeap.insert(num)
+            }
+        } else {
+            if (num < this.maxHeap.top()) {
+                this.minHeap.insert(this.maxHeap.extract())
+                this.maxHeap.insert(num)
+            } else {
+                this.minHeap.insert(num)
+            }
+        }
+
+    }
+
+    findMedian() {
+        if (this.minHeap.length === this.maxHeap.length) {
+            return (this.minHeap.top() + this.maxHeap.top()) / 2
+        } else {
+            return this.maxHeap.top()
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function test(MedianFinder) {
     const testArr = [{
             ins: ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"],
