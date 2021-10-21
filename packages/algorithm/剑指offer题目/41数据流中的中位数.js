@@ -125,6 +125,12 @@ class MedianFinder2 {
 }
 
 
+function swap(nums, i, j) {
+    const temp = nums[i]
+    nums[i] = nums[j]
+    nums[j] = temp
+}
+
 class Heap {
     nums = []
     compare
@@ -138,32 +144,66 @@ class Heap {
 
     insert(num) {
 
+        this.nums.push(num)
+
+        let index = this.length - 1
+
+        while (index) {
+            const parentIndex = (index - 1 >> 1)
+            if (!this.compare(this.nums[parentIndex], this.nums[index])) {
+                break
+            }
+            swap(this.nums, parentIndex, index)
+            index = parentIndex
+        }
+
     }
 
     /**
-     * @return {number}
+     * @return {number|null}
      */
     extract() {
+        if (!this.length) return null
+        swap(this.nums, this.length - 1, 0)
+        const res = this.nums.pop()
+        let index = 0
+        let exchangeIndex = index * 2 + 1
+        while (exchangeIndex < this.length) {
+            const rightChildIndex = index * 2 + 2
+            if (rightChildIndex && this.compare(this.nums[exchangeIndex], this.nums[rightChildIndex])) {
+                exchangeIndex = rightChildIndex
+            }
+            if (!this.compare(this.nums[index], this.nums[exchangeIndex])) {
+                break;
+            }
+            swap(this.nums, exchangeIndex, index)
+            index = exchangeIndex
+            exchangeIndex = index * 2 + 1
+        }
+
+        return res
 
     }
 
     /**
-     * @return {number}
+     * @return {number|null}
      */
     top() {
+        if (!this.nums) return null
+        return this.nums[0]
 
     }
 }
 
 class MinHeap extends Heap {
     constructor() {
-        super((a, b) => a - b)
+        super((a, b) => a > b)
     }
 }
 
 class MaxHeap extends Heap {
     constructor() {
-        super((a, b) => b - a)
+        super((a, b) => b > a)
     }
 }
 
@@ -185,9 +225,14 @@ class MedianFinder3 {
     minHeap = new MinHeap()
     maxHeap = new MaxHeap()
 
+
     addNum(num) {
         if (this.maxHeap.length <= this.minHeap.length) {
-            if (num > this.minHeap.top()) {
+            if (!this.maxHeap.length && !this.minHeap.length) {
+                this.maxHeap.insert(num)
+                return;
+            }
+            if (this.minHeap.length && num > this.minHeap.top()) {
                 this.maxHeap.insert(this.minHeap.extract())
                 this.minHeap.insert(num)
             } else {
@@ -205,6 +250,12 @@ class MedianFinder3 {
     }
 
     findMedian() {
+        // maxHeap: -2
+        // minHeap: -1
+
+        if (!this.maxHeap.length && !this.minHeap.length) {
+            return null;
+        }
         if (this.minHeap.length === this.maxHeap.length) {
             return (this.minHeap.top() + this.maxHeap.top()) / 2
         } else {
@@ -214,8 +265,6 @@ class MedianFinder3 {
     }
 
 }
-
-
 
 
 
@@ -305,8 +354,25 @@ function test(MedianFinder) {
             ],
             output: [null, null, 12.0, null, 11.0, null, 12.0, null, 11.5, null, 11.0, null, 11.5, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 10.5, null, 10.0, null, 10.5, null, 10.0]
         },
+        {
+            ins: ["MedianFinder", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian"],
+            input: [
+                [],
+                [-1],
+                [],
+                [-2],
+                [],
+                [-3],
+                [],
+                [-4],
+                [],
+                [-5],
+                []
+            ],
+            output: [null, null, -1.0, null, -1.5, null, -2.0, null, -2.5, null, -3.0]
+        }
 
-    ].slice(1)
+    ].slice(0)
 
 
 
@@ -341,4 +407,4 @@ function test(MedianFinder) {
     })
 }
 
-test(MedianFinder2)
+test(MedianFinder3)
