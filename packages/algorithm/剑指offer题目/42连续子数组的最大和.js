@@ -81,4 +81,33 @@ function maxSubArray(nums) {
     return maxValue;
 }
 
-test(maxSubArray);
+/**
+ * @description 动态规划。
+ * f(i) = {
+ *     nums[i]              i===0 || f(i-1) <= 0
+ *     nums[i] + f(i-1)     i>0   && f(i-1) > 0
+ * }
+ * 然后求出最大的f(i)即可。
+ * @param {number[]} nums
+ * @return {number}
+ */
+function maxSubArray2(nums) {
+    if (!nums.length) return 0;
+    const maxArr = [];
+    let max;
+    for (let i = 0; i < nums.length; i++) {
+        if (i === 0 || maxArr[i - 1] <= 0) {
+            maxArr[i] = nums[i];
+        } else if (i > 0 && maxArr[i - 1] > 0) {
+            maxArr[i] = nums[i] + maxArr[i - 1];
+        }
+
+        if (max === undefined || maxArr[i] > max) {
+            max = maxArr[i];
+        }
+    }
+
+    return max;
+}
+
+test(maxSubArray2);
