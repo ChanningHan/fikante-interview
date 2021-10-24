@@ -18,5 +18,9 @@ module.exports = {
         'no-unused-expressions': 'off',
         'no-param-reassign': 'off',
         'no-debugger': 'off',
+        'no-bitwise': 'off',
+        'no-continue': 'off',
+        'prefer-const': 'off',
+        'func-names': 'off',
     },
 };

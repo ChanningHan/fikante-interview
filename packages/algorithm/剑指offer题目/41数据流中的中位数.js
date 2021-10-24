@@ -4,7 +4,7 @@
 
 例如，
 
-[2,3,4] 的中位数是 3
+[2,3,4]的中位数是 3
 
 [2,3] 的中位数是 (2 + 3) / 2 = 2.5
 
@@ -32,31 +32,29 @@ double findMedian() - 返回目前所有元素的中位数。
  * initialize your data structure here.
  * @description 获取中间数时进行排序再获取中间下标的值。
  */
-var MedianFinder = function() {
-    this.nums = []
+let MedianFinder = function () {
+    this.nums = [];
 };
 
-/** 
+/**
  * @param {number} num
  * @return {void}
  */
-MedianFinder.prototype.addNum = function(num) {
-    this.nums.push(num)
-
+MedianFinder.prototype.addNum = function (num) {
+    this.nums.push(num);
 };
 
 /**
  * @return {number}
  */
-MedianFinder.prototype.findMedian = function() {
-    if (!this.nums.length) return null
-    this.nums.sort((a, b) => a - b)
-    const len = this.nums.length
+MedianFinder.prototype.findMedian = function () {
+    if (!this.nums.length) return null;
+    this.nums.sort((a, b) => a - b);
+    const len = this.nums.length;
     if (len % 2 === 0) {
-        return (this.nums[len / 2] + this.nums[len / 2 - 1]) / 2
-    } else {
-        return this.nums[(len - 1) / 2]
+        return (this.nums[len / 2] + this.nums[len / 2 - 1]) / 2;
     }
+    return this.nums[(len - 1) / 2];
 };
 
 /**
@@ -66,144 +64,141 @@ MedianFinder.prototype.findMedian = function() {
  * var param_2 = obj.findMedian()
  */
 
-
 /**
  * @description 通过二分查找的方式插入新数，这样可以保证数组是排序的，
  * 且在查找中位数时不需要排序，可以在O(1)的时间复杂度下找到中位数。
- * 
+ *
  */
 class MedianFinder2 {
-    nums = []
+    nums = [];
 
     /**
-     * 
-     * @param {number} num 
+     *
+     * @param {number} num
      */
     addNum(num) {
         if (!this.nums.length) {
             this.nums.push(num);
-            return
+            return;
         }
         let start = 0;
-        let end = this.nums.length - 1
+        let end = this.nums.length - 1;
 
         while (start < end) {
-            const midIndex = (end - start >> 1) + start
-            const midNum = this.nums[midIndex]
+            const midIndex = ((end - start) >> 1) + start;
+            const midNum = this.nums[midIndex];
 
             if (num < midNum) {
-                end = midIndex - 1
+                end = midIndex - 1;
             } else if (num > midNum) {
-                start = midIndex + 1
+                start = midIndex + 1;
             } else {
-                start = midIndex
-                break
+                start = midIndex;
+                break;
             }
         }
 
         if (this.nums[start] - num > 0) {
-            this.nums.splice(start, 0, num)
+            this.nums.splice(start, 0, num);
         } else {
-            this.nums.splice(start + 1, 0, num)
+            this.nums.splice(start + 1, 0, num);
         }
-
     }
 
     /**
-     * 
+     *
      * @returns {number}
      */
     findMedian() {
-        if (this.nums.length === 0) return null
-        const mid = this.nums.length >> 1
+        if (this.nums.length === 0) return null;
+        const mid = this.nums.length >> 1;
         if (this.nums.length % 2 === 0) {
-            return (this.nums[mid] + this.nums[mid - 1]) / 2
-        } else {
-            return this.nums[mid]
+            return (this.nums[mid] + this.nums[mid - 1]) / 2;
         }
+        return this.nums[mid];
     }
 }
 
-
 function swap(nums, i, j) {
-    const temp = nums[i]
-    nums[i] = nums[j]
-    nums[j] = temp
+    const temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
 }
 
 class Heap {
-    nums = []
-    compare
+    nums = [];
+
+    compare;
+
     constructor(compare) {
-        this.compare = compare
+        this.compare = compare;
     }
 
     get length() {
-        return this.nums.length
+        return this.nums.length;
     }
 
     insert(num) {
+        this.nums.push(num);
 
-        this.nums.push(num)
-
-        let index = this.length - 1
+        let index = this.length - 1;
 
         while (index) {
-            const parentIndex = (index - 1 >> 1)
+            const parentIndex = (index - 1) >> 1;
             if (!this.compare(this.nums[parentIndex], this.nums[index])) {
-                break
+                break;
             }
-            swap(this.nums, parentIndex, index)
-            index = parentIndex
+            swap(this.nums, parentIndex, index);
+            index = parentIndex;
         }
-
     }
 
     /**
      * @return {number|null}
      */
     extract() {
-        if (!this.length) return null
-        swap(this.nums, this.length - 1, 0)
-        const res = this.nums.pop()
-        let index = 0
-        let exchangeIndex = index * 2 + 1
+        if (!this.length) return null;
+        swap(this.nums, this.length - 1, 0);
+        const res = this.nums.pop();
+        let index = 0;
+        let exchangeIndex = index * 2 + 1;
         while (exchangeIndex < this.length) {
-            const rightChildIndex = index * 2 + 2
-            if (rightChildIndex && this.compare(this.nums[exchangeIndex], this.nums[rightChildIndex])) {
-                exchangeIndex = rightChildIndex
+            const rightChildIndex = index * 2 + 2;
+            if (
+                rightChildIndex &&
+                this.compare(this.nums[exchangeIndex], this.nums[rightChildIndex])
+            ) {
+                exchangeIndex = rightChildIndex;
             }
             if (!this.compare(this.nums[index], this.nums[exchangeIndex])) {
                 break;
             }
-            swap(this.nums, exchangeIndex, index)
-            index = exchangeIndex
-            exchangeIndex = index * 2 + 1
+            swap(this.nums, exchangeIndex, index);
+            index = exchangeIndex;
+            exchangeIndex = index * 2 + 1;
         }
 
-        return res
-
+        return res;
     }
 
     /**
      * @return {number|null}
      */
     top() {
-        if (!this.nums) return null
-        return this.nums[0]
-
+        if (!this.nums) return null;
+        return this.nums[0];
     }
 }
 
 class MinHeap extends Heap {
     constructor() {
-        super((a, b) => a > b)
+        super((a, b) => a > b);
     }
 }
 
 class MaxHeap extends Heap {
     constructor() {
-        super((a, b) => b > a)
+        super((a, b) => b > a);
     }
 }
 
@@ -217,36 +212,33 @@ class MaxHeap extends Heap {
  * 此外，插入时需要先比较这个数是否比最小堆的最小数还要大，
  * 如果是则将最小堆的数取出并插入到最大堆，再将该数插入最小堆，
  * 如果比最小堆的最小数还要小，则可直接插入到最大堆中。
- * 
+ *
  * 取中间数时，如果两个堆数量不一致，则取左边的最大堆的堆顶元素（哪边多取哪边），
  * 如果两个堆的数量相同，则各取两个堆的堆顶元素相加取平均值。
  */
 class MedianFinder3 {
-    minHeap = new MinHeap()
-    maxHeap = new MaxHeap()
+    minHeap = new MinHeap();
 
+    maxHeap = new MaxHeap();
 
     addNum(num) {
         if (this.maxHeap.length <= this.minHeap.length) {
             if (!this.maxHeap.length && !this.minHeap.length) {
-                this.maxHeap.insert(num)
+                this.maxHeap.insert(num);
                 return;
             }
             if (this.minHeap.length && num > this.minHeap.top()) {
-                this.maxHeap.insert(this.minHeap.extract())
-                this.minHeap.insert(num)
+                this.maxHeap.insert(this.minHeap.extract());
+                this.minHeap.insert(num);
             } else {
-                this.maxHeap.insert(num)
+                this.maxHeap.insert(num);
             }
+        } else if (num < this.maxHeap.top()) {
+            this.minHeap.insert(this.maxHeap.extract());
+            this.maxHeap.insert(num);
         } else {
-            if (num < this.maxHeap.top()) {
-                this.minHeap.insert(this.maxHeap.extract())
-                this.maxHeap.insert(num)
-            } else {
-                this.minHeap.insert(num)
-            }
+            this.minHeap.insert(num);
         }
-
     }
 
     findMedian() {
@@ -257,56 +249,65 @@ class MedianFinder3 {
             return null;
         }
         if (this.minHeap.length === this.maxHeap.length) {
-            return (this.minHeap.top() + this.maxHeap.top()) / 2
-        } else {
-            return this.maxHeap.top()
+            return (this.minHeap.top() + this.maxHeap.top()) / 2;
         }
-
+        return this.maxHeap.top();
     }
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function test(MedianFinder) {
-    const testArr = [{
-            ins: ["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"],
-            input: [
-                [],
-                [1],
-                [2],
-                [],
-                [3],
-                []
-            ],
-            output: [null, null, null, 1.50000, null, 2.00000]
+    const testArr = [
+        {
+            ins: ['MedianFinder', 'addNum', 'addNum', 'findMedian', 'addNum', 'findMedian'],
+            input: [[], [1], [2], [], [3], []],
+            output: [null, null, null, 1.5, null, 2.0],
         },
         {
-            ins: ["MedianFinder", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian"],
+            ins: [
+                'MedianFinder',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+            ],
             input: [
                 [],
                 [12],
@@ -350,61 +351,99 @@ function test(MedianFinder) {
                 [12],
                 [],
                 [0],
-                []
+                [],
             ],
-            output: [null, null, 12.0, null, 11.0, null, 12.0, null, 11.5, null, 11.0, null, 11.5, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 11.0, null, 10.5, null, 10.0, null, 10.5, null, 10.0]
+            output: [
+                null,
+                null,
+                12.0,
+                null,
+                11.0,
+                null,
+                12.0,
+                null,
+                11.5,
+                null,
+                11.0,
+                null,
+                11.5,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                11.0,
+                null,
+                10.5,
+                null,
+                10.0,
+                null,
+                10.5,
+                null,
+                10.0,
+            ],
         },
         {
-            ins: ["MedianFinder", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian", "addNum", "findMedian"],
-            input: [
-                [],
-                [-1],
-                [],
-                [-2],
-                [],
-                [-3],
-                [],
-                [-4],
-                [],
-                [-5],
-                []
+            ins: [
+                'MedianFinder',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
+                'addNum',
+                'findMedian',
             ],
-            output: [null, null, -1.0, null, -1.5, null, -2.0, null, -2.5, null, -3.0]
-        }
+            input: [[], [-1], [], [-2], [], [-3], [], [-4], [], [-5], []],
+            output: [null, null, -1.0, null, -1.5, null, -2.0, null, -2.5, null, -3.0],
+        },
+    ].slice(0);
 
-    ].slice(0)
-
-
-
-
-    let medianFinder = null
+    let medianFinder = null;
 
     const insMap = {
-        'MedianFinder': () => {
-            medianFinder = new MedianFinder()
-            return null
+        MedianFinder: () => {
+            medianFinder = new MedianFinder();
+            return null;
         },
-        "addNum": (num) => {
-            medianFinder.addNum(num)
-            return null
+        addNum: (num) => {
+            medianFinder.addNum(num);
+            return null;
         },
-        "findMedian": () => {
-            return medianFinder.findMedian()
-        }
-    }
-
-
+        findMedian: () => {
+            return medianFinder.findMedian();
+        },
+    };
 
     testArr.forEach((item, index) => {
-        console.log(`test ${index+1}, ${JSON.stringify(item)}`);
-        const res = []
+        console.log(`test ${index + 1}, ${JSON.stringify(item)}`);
+        const res = [];
         item.ins.forEach((i, index) => {
-            res.push(insMap[i](item.input[index][0]))
-        })
+            res.push(insMap[i](item.input[index][0]));
+        });
         console.log('res', res);
-        const isFail = res.some((i, index) => i !== item.output[index])
+        const isFail = res.some((i, index) => i !== item.output[index]);
         console.log(isFail ? 'fail' : 'pass');
-    })
+    });
 }
 
-test(MedianFinder3)
+test(MedianFinder3);
