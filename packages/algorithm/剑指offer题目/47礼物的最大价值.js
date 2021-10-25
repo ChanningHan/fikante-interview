@@ -52,3 +52,32 @@ function maxValue(grid) {
 
     return maxMatrix[grid.length - 1][grid[0].length - 1];
 }
+
+/**
+ * @description 动态规划（优化空间复杂度）。
+ * i>0 && j>0时，maxValue(i,j) = max(maxValue(i-1,j), maxValue(i,j-1)) + grid[i][j]。
+ * 通过模拟上面算法的过程，可以发现grid中的值只有当求其本身最大价值时才会访问到，其它点访问到该坐标的都是其最大价值而不是本身的值，
+ * 因此我们可以在求出某个坐标的最大价值时就将原来的值设为其最大价值，
+ * 如此不需要创建额外O(mn)空间复杂度的maxMatrix矩阵来存储某个坐标的最大价值，
+ * 将空间复杂度从O(mn)优化到O(1)。
+ *
+ * @param {number[][]} grid
+ * @return {number}
+ */
+function maxValue2(grid) {
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            if (i === 0 && j === 0) continue;
+
+            if (i === 0 && j > 0) {
+                grid[i][j] += grid[i][j - 1];
+            } else if (i > 0 && j === 0) {
+                grid[i][j] += grid[i - 1][j];
+            } else if (i > 0 && j > 0) {
+                grid[i][j] += Math.max(grid[i - 1][j], grid[i][j - 1]);
+            }
+        }
+    }
+
+    return grid[grid.length - 1][grid[0].length - 1];
+}
