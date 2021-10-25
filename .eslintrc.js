@@ -22,5 +22,7 @@ module.exports = {
         'no-continue': 'off',
         'prefer-const': 'off',
         'func-names': 'off',
+        'no-shadow': 'off',
+        'max-classes-per-file': 'off',
     },
 };
