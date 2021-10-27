@@ -160,7 +160,4 @@ var getIntersectionNode2 = function(headA, headB) {
     }
 
     return null
-
-
-
 };
