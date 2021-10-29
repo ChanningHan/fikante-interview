@@ -48,20 +48,22 @@
  * @return {boolean}
  */
 function isBalanced(root) {
+    let res = true;
     function treeDeep(node) {
         if (!node) return 0;
         const leftTreeDeep = treeDeep(node.left);
         const rightTreeDeep = treeDeep(node.right);
+        if (Math.abs(leftTreeDeep - rightTreeDeep) > 1) {
+            res = false;
+            return;
+        }
+
         return Math.max(leftTreeDeep, rightTreeDeep) + 1;
     }
 
     if (!root) return true;
 
-    const leftTreeDeep = treeDeep(root.left);
-    const rightTreeDeep = treeDeep(root.right);
-    if (Math.abs(leftTreeDeep - rightTreeDeep) > 1) {
-        return false;
-    }
+    treeDeep(root);
 
-    return isBalanced(root.left) && isBalanced(root.right);
+    return res;
 }
