@@ -27,6 +27,5 @@
  * @return {string}
  */
 function reverseLeftWords(s, n) {
-    let aheadStr = s.slice(0, n)
-    return s.slice(n) + aheadStr
+    return s.slice(n) + s.slice(0, n)
 };
