@@ -57,7 +57,7 @@ function constructArr(a) {
     d[n - 1] = 1
 
     for (let i = 1; i < n; i++) {
-        c[i] = c[i - 1] * a[i]
+        c[i] = c[i - 1] * a[i - 1]
     }
 
     for (let i = n - 2; i >= 0; i--) {
