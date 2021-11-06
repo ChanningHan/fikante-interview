@@ -1,7 +1,6 @@
 /*
-*1111
-* 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，
-调用 min、push 及 pop 的时间复杂度都是 O(1)。
+*
+* 定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。
 
 示例:
 
@@ -30,7 +29,7 @@ minStack.min();   --> 返回 -2.
 /**
  * initialize your data structure here.
  */
-const MinStack = function() {
+const MinStack = function () {
     // 主栈
     this.stack = [];
     // 辅助栈
@@ -43,7 +42,7 @@ const MinStack = function() {
  * @param {number} x
  * @return {void}
  */
-MinStack.prototype.push = function(x) {
+MinStack.prototype.push = function (x) {
     if (x === undefined) return;
     this.stack.push(x);
 
@@ -59,7 +58,7 @@ MinStack.prototype.push = function(x) {
 /**
  * @return {void}
  */
-MinStack.prototype.pop = function() {
+MinStack.prototype.pop = function () {
     this.assistStack.pop();
     this.stack.pop();
 };
@@ -67,14 +66,14 @@ MinStack.prototype.pop = function() {
 /**
  * @return {number}
  */
-MinStack.prototype.top = function() {
+MinStack.prototype.top = function () {
     return this.stack.length ? this.stack[this.stack.length - 1] : null;
 };
 
 /**
  * @return {number}
  */
-MinStack.prototype.min = function() {
+MinStack.prototype.min = function () {
     if (!this.assistStack.length) return null;
     return this.assistStack[this.assistStack.length - 1];
 };
