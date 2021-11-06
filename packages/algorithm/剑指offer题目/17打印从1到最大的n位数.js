@@ -1,6 +1,7 @@
 /*
  *
- * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+ * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。
+ * 比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
 
 示例 1:
 
@@ -16,12 +17,10 @@ n 为正整数
  * */
 
 function test(func) {
-    const testArr = [
-        {
-            input: 1,
-            output: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        },
-    ];
+    const testArr = [{
+        input: 1,
+        output: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    }, ];
     let passCount = 0;
     testArr.forEach((item, index) => {
         const res = func(item.input);
