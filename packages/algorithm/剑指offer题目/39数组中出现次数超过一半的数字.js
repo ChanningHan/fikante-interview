@@ -13,6 +13,7 @@
 输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
 输出: 2
 
+·
 
 限制：
 
@@ -128,7 +129,7 @@ function partition(nums, start, end) {
  * @param {number[]} nums
  * @return {number}
  */
-const majorityElement = function (nums) {
+const majorityElement = function(nums) {
     if (checkInvalidArray(nums)) throw new Error('nums is empty');
 
     const middle = nums.length >> 1;
@@ -149,8 +150,7 @@ const majorityElement = function (nums) {
 };
 
 function test(fn) {
-    const testArr = [
-        {
+    const testArr = [{
             input: [3, 2, 3],
             output: 3,
         },
