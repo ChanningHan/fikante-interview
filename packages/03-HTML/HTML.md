@@ -160,6 +160,8 @@ ___
 
 ## 4. DOCTYPE(⽂档类型) 的作⽤
 
+[怪异模式和标准模式](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Quirks_Mode_and_Standards_Mode)
+
 DOCTYPE是HTML5中一种标准通用标记语言的文档类型声明，它的目的是**告诉浏览器（解析器）应该以什么样（html或xhtml）的文档类型定义来解析文档**，不同的渲染模式会影响浏览器对 CSS 代码甚⾄ JavaScript 脚本的解析。它必须声明在HTML⽂档的第⼀⾏。
 
 浏览器渲染页面的两种模式（可通过document.compatMode获取，比如，语雀官网的文档类型是**CSS1Compat**）：
@@ -168,6 +170,12 @@ DOCTYPE是HTML5中一种标准通用标记语言的文档类型声明，它的�
 - **BackCompat：怪异模式(混杂模式)(Quick mode)**，浏览器使用自己的怪异模式解析渲染页面。在怪异模式中，页面以一种比较宽松的向后兼容的方式显示。
 
 ### 
+
+我们常用的“`<!DOCTYPE html>`"就是用于 确保浏览器按照最佳的相关规范（CSS1Compat）进行渲染，而不是使用一个不符合规范的渲染模式（怪异模式BackCompat）。
+
+
+
+
 
 ____
 
