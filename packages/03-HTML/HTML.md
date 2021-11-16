@@ -205,35 +205,34 @@ ___
 
 ```html
 <meta charset="UTF-8" >
-复制代码
 ```
 
 （2） `keywords`，页面关键词：
 
 ```html
 <meta name="keywords" content="关键词" />
-复制代码
+
 ```
 
 （3）`description`，页面描述：
 
 ```html
 <meta name="description" content="页面描述内容" />
-复制代码
+
 ```
 
 （4）`refresh`，页面重定向和刷新：
 
 ```html
 <meta http-equiv="refresh" content="0;url=" />
-复制代码
+
 ```
 
 （5）`viewport`，适配移动端，可以控制视口的大小和比例：
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-复制代码
+
 ```
 
 其中，`content` 参数有以下几种：
@@ -249,7 +248,7 @@ ___
 
 ```html
 <meta name="robots" content="index,follow" />
-复制代码
+
 ```
 
 其中，`content` 参数有以下几种：
@@ -271,7 +270,7 @@ ___
 
 ```html
 <img src="image-128.png" srcset="image-256.png 2x" />
-复制代码
+
 ```
 
 使用上面的代码，就能实现在屏幕密度为1x的情况下加载image-128.png, 屏幕密度为2x时加载image-256.png。
@@ -282,7 +281,7 @@ ___
 <img src="image-128.png"
      srcset="image-128.png 128w, image-256.png 256w, image-512.png 512w"
      sizes="(max-width: 360px) 340px, 128px" />
-复制代码
+
 ```
 
 其中srcset指定图片的地址和对应的图片质量。sizes用来设置图片的尺寸零界点。对于 srcset 中的 w 单位，可以理解成图片质量。如果可视区域小于这个质量的值，就可以使用。浏览器会自动选择一个最小的可用图片。
@@ -291,7 +290,7 @@ sizes语法如下：
 
 ```html
 sizes="[media query] [length], [media query] [length] ... "
-复制代码
+
 ```
 
 sizes就是指默认显示128px, 如果视区宽度大于360px, 则显示340px。
@@ -344,7 +343,7 @@ ____
 
 ```html
 <html lang="en" manifest="index.manifest">
-复制代码
+
 ```
 
 （2）在 `cache.manifest` 文件中编写需要离线存储的资源：
@@ -359,7 +358,7 @@ CACHE MANIFEST
     resourse/logo.png
     FALLBACK:
     / /offline.html
-复制代码
+
 ```
 
 - **CACHE**: 表示需要离线存储的资源列表，由于包含 manifest 文件的页面将被自动离线存储，所以不需要把页面自身也列出来。
@@ -453,14 +452,14 @@ label标签来定义表单控件的关系：当用户选择label标签时，浏�
 ```html
 <label for="mobile">Number:</label>
 <input type="text" id="mobile"/>
-复制代码
+
 ```
 
 - 使用方法2：
 
 ```html
 <label>Date:<input type="text"/></label>
-复制代码
+
 ```
 
 ___
