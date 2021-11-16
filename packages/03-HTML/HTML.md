@@ -293,7 +293,7 @@ sizes="[media query] [length], [media query] [length] ... "
 
 ```
 
-sizes就是指默认显示128px, 如果视区宽度大于360px, 则显示340px。
+sizes就是指默认显示128px, 如果视区宽度大于360px, 则显示340px。 
 
 
 
