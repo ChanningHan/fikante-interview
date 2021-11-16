@@ -2,7 +2,7 @@
 
 
 
-
+[HTML Standard](https://whatwg-cn.github.io/html/)
 
 [TOC]
 
@@ -13,6 +13,10 @@ ___
 
 
 ##  1. [HTML5 新增哪些特性](https://gpingfeng.github.io/front-end-interview/#/question/index?id=html5-新增哪些特性)
+
+[前端面试之html5新特性](https://zhuanlan.zhihu.com/p/109716425)
+
+
 
 - 增强型表单
   - 新增元素
