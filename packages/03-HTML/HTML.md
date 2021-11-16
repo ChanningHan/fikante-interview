@@ -317,6 +317,8 @@ ___
 
 ## 9. 说一下 web worker
 
+[Web Worker ——MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers)
+
 在 HTML 页面中，如果在执行脚本时，页面的状态是不可相应的，直到脚本执行完成后，页面才变成可相应。web worker 是运行在后台的 js，独立于其他脚本，不会影响页面的性能。 并且通过 postMessage 将结果回传到主线程。这样在进行复杂操作的时候，就不会阻塞主线程了。
 
 如何创建 web worker：
@@ -325,7 +327,10 @@ ___
 2. 创建 web worker 文件（js，回传函数等）
 3. 创建 web worker 对象
 
-
+- 一个worker是使用一个构造函数创建的一个对象(e.g. [`Worker()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker)) 运行一个命名的JavaScript文件 - 这个文件包含将在工作线程中运行的代码; workers 运行在另一个全局上下文中,不同于当前的[`window`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window). 因此，在 [`Worker`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker) 内通过 [`window`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window)获取全局作用域 (而不是[`self`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/self)) 将返回错误。
+- 通过postMessage通信，且一般是值的拷贝（结构化克隆算法，支持循环引用的对象），也可以移交值的控制权，移交后该值将在之前的上下文中被移除，无法访问。
+- 分专用worker和共享worker，专用workers是指标准worker仅在单一脚本中被使用；共享worker的上下文是[`SharedWorkerGlobalScope` (en-US)](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorkerGlobalScope)对象）。一个专用worker仅仅能被首次生成它的脚本使用，而共享worker可以同时被多个脚本使用。
+- 在worker内，不能直接操作DOM节点，也不能使用[`window`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window)对象的默认方法和属性。然而你可以使用大量window对象之下的东西，包括WebSockets，IndexedDB以及FireFox OS专用的Data Store API等数据存储机制。查看[Functions and classes available to workers](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Functions_and_classes_available_to_workers)获取详情。
 
 ____
 
