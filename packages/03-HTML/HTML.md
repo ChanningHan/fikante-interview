@@ -56,6 +56,10 @@ ___
   - XMLHttpRequest Level2
     - 跨源请求
     - 进度事件
+- Notification
+  - [MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/notification)
+  - [简单了解HTML5中的Web Notification桌面通知](https://www.zhangxinxu.com/wordpress/2016/07/know-html5-web-notification/)
+  
 
 
 
@@ -338,7 +342,7 @@ ____
 
 ## 10. HTML5的离线储存怎么使用，它的工作原理是什么
 
-### Manifest
+### Manifest（应用缓存）
 
 [聊一聊H5应用缓存-Manifest](https://louiszhai.github.io/2016/11/25/manifest/)
 
@@ -400,11 +404,61 @@ CACHE MANIFEST
 
 > 刚查mdn，这个属性已经被废弃了，不过其特性还是不错的，可以仅作为历史了解。
 >
-> 作为替代品，我们需要掌握ServiceWorker的相关知识。
+> 应用缓存主要是通过manifest文件来注册被缓存的静态资源，已经被废弃，因为他的设计有些不合理的地方，他在缓存静态文件的同时，也会默认缓存html文件。这导致页面的更新只能通过manifest文件中的版本号来决定。所以，应用缓存只适合那种常年不变化的静态网站。如此的不方便，也是被废弃的重要原因。
+>
+> PWA也运用了该文件，不同于manifest简单的将文件通过是否缓存进行分类，PWA用manifest构建了自己的APP骨架，并运用Servie Worker来控制缓存。
+>
+> ServiceWorker作为PWA的核心一环，我们需要掌握其相关知识。
 
 ### ServiceWorker
 
-这里可以看看张鑫旭大佬的文章：[借助Service Worker和cacheStorage缓存及离线开发](https://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/)
+[借助Service Worker和cacheStorage缓存及离线开发](https://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/)。
+
+[网易云课堂 Service Worker 运用与实践](https://mp.weixin.qq.com/s/3Ep5pJULvP7WHJvVJNDV-g)
+
+
+
+sw最重要的**工作原理**就是：
+
+1、后台线程：独立于当前网页线程；
+
+2、网络代理：在网页发起请求时代理，来缓存文件。
+
+
+
+sw 是基于 HTTPS 的，因为Service Worker中涉及到请求拦截，所以必须使用HTTPS协议来保障安全。
+
+如果是本地调试的话，localhost是可以的。
+
+
+
+**生命周期**
+
+![image-20211117101856955](https://gitee.com/ChanningGit/image-hosting/raw/master/images/image-20211117101856955.png)
+
+
+
+由于直接写原生的sw.js，比较繁琐和复杂，所以一些工具就出现了，而**Workbox**是其中的佼佼者，由google团队推出。
+
+
+
+ServiceWorker作为PWA中的关键一环，但又独立于PWA。
+
+PWA的核心技术包括：
+
+1. Web App Manifest – 在主屏幕添加app图标，定义手机标题栏颜色之类
+
+   - https://developer.mozilla.org/zh-CN/docs/Web/Manifest
+
+   - 与html元素属性的manifest不同，这里是作为link引入的，如：
+
+     <link rel="manifest" href="/manifest.json">
+
+2. Service Worker – 缓存，离线开发，以及地理位置信息处理等
+
+3. App Shell – 先显示APP的主结构，再填充主数据，更快显示更好体验
+
+4. Push Notification – 消息推送，之前有写过“[简单了解HTML5中的Web Notification桌面通知](http://www.zhangxinxu.com/wordpress/2016/07/know-html5-web-notification/)”
 
 ____
 
