@@ -693,6 +693,8 @@ ___
 
 ## 20. 说一下 HTML5 drag API
 
+[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API)
+
 - dragstart：事件主体是被拖放元素，在开始拖放被拖放元素时触发。
 - darg：事件主体是被拖放元素，在正在拖放被拖放元素时触发。
 - dragenter：事件主体是目标元素，在被拖放元素进入某元素时触发。
@@ -701,4 +703,5 @@ ___
 - drop：事件主体是目标元素，在目标元素完全接受被拖放元素时触发。
 - dragend：事件主体是被拖放元素，在整个拖放操作结束时触发。
 
+>  文档同级目录下有小demo
 

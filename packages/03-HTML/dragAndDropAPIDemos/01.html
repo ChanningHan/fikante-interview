@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            border: 1px solid gray;
+            width: 100px;
+            height: 100px;
+        }
+        #box1 {
+            background-color: blueviolet;
+        }
+        #box2 {
+            width: 200px;
+            height: 200px;
+            background-color: darkorange;
+        }
+    </style>
+</head>
+<body>
+<h2>Drag the grape box to the origin box.</h2>
+<div id="box2" class="box" draggable="true"></div>
+<div id="box1" class="box" draggable="true"></div>
+
+<script>
+    const $ = el => document.querySelector(el)
+    const box1 = $('#box1');
+    console.log(box1)
+    const box2 = $('#box2');
+    const img = new Image();
+    img.src = './1.jpeg';
+    box1.addEventListener('dragstart', e => {
+        console.log('dragStart')
+        console.log(e)
+        e.dataTransfer.setData('text/plain','#'+e.target.id)
+        e.dataTransfer.setDragImage(img, 0, 0);
+    });
+    box1.addEventListener('drag',e=>{
+        console.log('drag')
+        console.log(e)
+    })
+    box2.addEventListener('dragenter',e=>{
+        console.log('dragenter')
+        console.log(e)
+    })
+    box2.addEventListener('dragover',e=>{
+        e.preventDefault()
+        console.log('dragover')
+        console.log(e)
+        e.effectAllowed = 'move'
+
+    })
+    box2.addEventListener('dragleave',e=>{
+        console.log('dragleave')
+        console.log(e)
+    })
+    box2.addEventListener('drop',e=>{
+        e.preventDefault()
+        const data = e.dataTransfer.getData('text/plain')
+        e.target.appendChild($(data))
+    })
+</script>
+</body>
+</html>
