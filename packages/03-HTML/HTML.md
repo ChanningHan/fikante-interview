@@ -475,9 +475,9 @@ ____
 
 [借助Service Worker和cacheStorage缓存及离线开发](https://www.zhangxinxu.com/wordpress/2017/07/service-worker-cachestorage-offline-develop/)
 
-通过自动化工具，根据文件名生成hash值作为版本号，这样每次构建发布时都会发布新的版本。
+- 通过自动化工具，根据文件名生成hash值作为版本号，这样每次构建发布时都会发布新的版本。
 
-
+- 使用WorkBox
 
 ___
 
