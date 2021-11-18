@@ -1,4 +1,4 @@
-# HTML
+HTML
 
 
 
@@ -808,7 +808,166 @@ XHTML：（eXtensible HyperText Markup Language），是一种标记语言，表
 
 ______
 
-## 25.
+
+
+## 25. img标签的title和alt属性有什么区别？
+
+title 是鼠标移到元素上是显示的文字可针对多种标签，而alt是图片加载失败时显示的内容，只针对img。
+
+
+
+____
+
+
+
+
+
+## 26. 行内元素与块级元素对比
+
+https://developer.mozilla.org/zh-CN/docs/Web/HTML/Inline_elements
+
+https://mp.weixin.qq.com/s/xEnUQVDB5I90UMM2RaVNog
+
+
+
+行内元素：一个行内元素只占据它对应标签的边框所包含的空间。
+
+块级元素：块级元素占据其父元素（容器）的整个水平空间，垂直空间等于其内容高度，因此创建了一个“块”。
+
+对比：
+
+- 内容
+
+  一般情况下，行内元素只能包含数据和其他行内元素。
+
+  而块级元素可以包含行内元素和其他块级元素。这种结构上的包含继承区别可以使块级元素创建比行内元素更”大型“的结构。
+
+- 格式
+
+  默认情况下，行内元素不会以新行开始，而块级元素会新起一行。
+
+
+
+|              | 是否独占一行 | width、height | padding、margin                               | 默认宽高           |
+| ------------ | ------------ | ------------- | --------------------------------------------- | ------------------ |
+| 块级元素     | 是           | 有效          | 有效                                          | 撑满父元素         |
+| 行内元素     | 否           | 无效          | padding有效；margin水平方向有效，竖直方向无效 | 随内部元素内容变化 |
+| 行内块级元素 | 否           | 有效          | 有效                                          | 随内部元素内容变化 |
+
+
+
+> position,属性值为absolute、fixed时,隐形地把内联元素转换为块级元素
+
+
+
+**置换元素**
+
+<img>、<input>、<textarea>、<select>、<object>是行内元素，但是它们却可以设置宽高，因为它们是置换元素。
+
+置换元素的内容不受CSS视觉格式化模型控制，CSS渲染模型并不考虑对此内容的渲染，且元素本身一般拥有固有尺寸（宽度，高度，宽高比）的元素，被称之为置换元素。浏览器根据元素的标签和属性，来决定元素的具体显示内容。 例如：浏览器会根据<img>标签的src属性的值来读取图片信息并显示出来，而如果查看html代码，则看不到图片的实际内容；<input>标签的type属性来决定是显示输入框，还是单选按钮等。
+
+置换元素在其显示中生成了框，这也就是有的内联元素能够设置宽高的原因。
+
+ 
+
+____
+
+## 27. HTML有哪些全局属性？
+
+https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes
+
+
+
+除了基本的HTML全局属性之外，还存在以下全局属性:
+
+- [**`xml:lang`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-xml:lang) 和 [**`xml:base`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-xml:base) ——两者都是从XHTML规范继承，但为了兼容性而被保留的。
+
+- 多重`aria-*`属性，用于改善可访问性。
+
+- [事件处理程序](https://developer.mozilla.org/zh-CN/docs/Web/Guide/Events/Event_handlers) 属性：**`onabort`**, `**onautocomplete**`, `**onautocompleteerror**`, `**onblur**`, `**oncancel**`, `**oncanplay**`, `**oncanplaythrough**`, `**onchange**`, `**onclick**`, `**onclose**`, `**oncontextmenu**`, `**oncuechange**`, `**ondblclick**`, `**ondrag**`, `**ondragend**`, `**ondragenter**`, `**ondragexit**`, `**ondragleave**`, `**ondragover**`, `**ondragstart**`, `**ondrop**`, `**ondurationchange**`, `**onemptied**`, `**onended**`, `**onerror**`, `**onfocus**`, `**oninput**`, `**oninvalid**`, `**onkeydown**`, `**onkeypress**`, `**onkeyup**`, `**onload**`, `**onloadeddata**`, `**onloadedmetadata**`, `**onloadstart**`, `**onmousedown**`, `**onmouseenter**`, `**onmouseleave**`, `**onmousemove**`, `**onmouseout**`, `**onmouseover**`, `**onmouseup**`, `**onmousewheel**`, `**onpause**`, `**onplay**`, `**onplaying**`, `**onprogress**`, `**onratechange**`, `**onreset**`, `**onresize**`, `**onscroll**`, `**onseeked**`, `**onseeking**`, `**onselect**`, `**onshow**`, `**onsort**`, `**onstalled**`, `**onsubmit**`, `**onsuspend**`, `**ontimeupdate**`, `**ontoggle**`, `**onvolumechange**`, `**onwaiting**`.
+
+  
+
+
+
+基本的HTML全局属性：
+
+[**`accesskey`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-accesskey)
+
+提供了为当前元素生成键盘快捷键的提示。这个属性由空格分隔的字符列表组成。浏览器应该使用在计算机键盘布局上存在的第一个。
+
+
+
+[**`autocapitalize`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-autocapitalize)
+
+控制用户的文本输入是否和如何自动大写，它可以有以下的值：
+
+- `off` or `none`，没有应用自动大写（所有字母都默认为小写字母）。
+- `on` or `sentences`，每个句子的第一个字母默认为大写字母;所有其他字母都默认为小写字母。
+- `words`，每个单词的第一个字母默认为大写字母;所有其他字母都默认为小写字母。
+- `characters`，所有的字母都应该默认为大写。
+
+[**`class`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-class)
+
+一个以空格分隔的元素的类名（classes ）列表，它允许 CSS 和 Javascript 通过类选择器 ([class selectors](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Class_selectors)) 或DOM方法( [`document.getElementsByClassName`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/getElementsByClassName))来选择和访问特定的元素。
+
+[**`contenteditable`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-contenteditable)
+
+一个枚举属性（enumerated attribute），表示元素是否可被用户编辑。 如果可以，浏览器会调整元素的部件（widget）以允许编辑。
+
+- `true` 或者空字符串，表明元素是可被编辑的；
+- `false`，表明元素不能被编辑。
+
+[**`contextmenu`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-contextmenu)
+
+[``](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/menu) 的`**id**` ，作为该元素的上下文菜单（已经不被支持，将从所有浏览器中删除）。
+
+[**`data-\*`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-data-*)
+
+一类自定义数据属性，它赋予我们在所有 HTML 元素上嵌入自定义数据属性的能力，并可以通过脚本(一般指JavaScript) 与 [HTML](https://developer.mozilla.org/zh-CN/docs/Web/HTML) 之间进行专有数据的交换。所有这些自定义数据属性都可以通过所属元素的 [`HTMLElement`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement) 接口来访问。 [`HTMLElement.dataset`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset) 属性可以访问它们。
+
+[**`dir`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-dir)
+
+一个指示元素中文本方向的枚举属性。它的取值如下：
+
+- ltr, 指从*左*到*右*，用于那种从左向右书写的语言（比如英语）；
+- rtl, 指从*右*到*左*，用于那种从右向左书写的语言（比如阿拉伯语）；
+- auto, 指由用户代理决定方向。它在解析元素中字符时会运用一个基本算法，直到发现一个具有强方向性的字符，然后将这一方向应用于整个元素。
+
+[**`draggable`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-draggable)
+
+一种枚举属性，指示是否可以 使用 [Drag and Drop API (en-US)](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API) 拖动元素。它可以有以下的值：
+
+- `true`, 这表明元素可能被拖动
+- `false`, 这表明元素可能不会被拖动
+
+[**`dropzone`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-dropzone) 
+
+枚举属性，指示可以使用 [Drag and Drop API](https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop) 在元素上删除哪些类型的内容。 它可以具有以下值：
+
+- copy，表示drop将创建被拖动元素的副本
+- move，表示拖动的元素将移动到此新位置。
+- `link`，将创建一个指向拖动数据的链接。
+
+[**`exportparts`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-exportparts) 
+
+Used to transitively export shadow parts from a nested shadow tree into a containing light tree.
+
+[**`hidden`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-hidden)
+
+布尔属性表示该元素尚未或不再*相关*。例如，它可用于隐藏在登录过程完成之前无法使用的页面元素。浏览器不会呈现此类元素。不得使用此属性隐藏可合法显示的内容
+
+[**`id`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-id)
+
+定义唯一标识符（ID），该标识符在整个文档中必须是唯一的。 其目的是在链接（使用片段标识符），脚本或样式（使用CSS）时标识元素。
+
+[**`inputmode`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-inputmode)
+
+向浏览器提供有关在编辑此元素或其内容时要使用的虚拟键盘配置类型的提示。主要用于 [``](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input)元素，但在[`contenteditable`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-contenteditable)模式下可用于任何元素。
+
+[**`is`**](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-is)
+
+允许您指定标准HTML元素应该像已注册的自定义内置元素一样（有关更多详细信息，请参阅使用自定义元素）。
 
 
 
