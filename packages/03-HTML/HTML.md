@@ -969,6 +969,57 @@ Used to transitively export shadow parts from a nested shadow tree into a contai
 
 允许您指定标准HTML元素应该像已注册的自定义内置元素一样（有关更多详细信息，请参阅使用自定义元素）。
 
+____
+
+## 28. 如何解决FOUC（无样式内容闪烁）问题
+
+
+
+[Web性能优化：FOUC](https://zhuanlan.zhihu.com/p/90172207)
+
+[前端魔法堂：解秘FOUC](https://segmentfault.com/a/1190000009134290)
+
+FOUC，也就是 flash of unstyled content，指的是网页渲染时，外部样式还没加载好，就以浏览器默认样式短暂地展示了部分内容，等到外部样式加载完成，又恢复正常的这个页面闪烁的过程。
+
+值得注意的是，整个浏览器渲染过程是同步进行的。也就是说，浏览器一边解析 HTML，一边构建渲染树，构建一部分，就会把当前已有的元素渲染出来。如果这个时候外部样式并没有加载完成，渲染出来的就是浏览器默认样式了。
+
+当浏览器开始执行一个 `<script>` 时，DOM 的构建会停下来（阻塞解析），因为我们的脚本很可能对当前的 DOM 进行查询和操作。所以这个时候，就会将已经构建好的渲染树先渲染出来。
+
+加载外部样式表时会阻塞渲染，且不会执行JS代码，但不阻塞解析。
+
+如果 DOM 树的内容为空，浏览器会直接跳过本次渲染。
+所以对于 SPA，更好的做法是在脚本中去动态创建顶层的容器，而不是写到 HTML 中。
+
+### 解决方案
+
+>  这里主要针对 SPA 页面，毕竟对 SSR 的页面来说，FOUC 或许不是一个大问题。
+
+了解了浏览器绘制的时机，FOUC 的问题就可以迎刃而解了。
+
+对于外部样式表加载，Chrome下不管外部样式表在哪里引入，在页面的所有外部样式表下载完成前，整个页面将不会被渲染，因此不会出现由于加载外部样式表到值的FOUC问题。
+
+对于JS，由于每个`<script>`执行前都会执行一次渲染，因此：
+
+- 将 JavaScript 资源尽量放到 `<head>` 中，只保留最后一个包含主逻辑的脚本在 `<body>` 中，因为它很可能要往 `<body>` 上挂载元素。这可以解决上面提到的 `<script>` 标签导致的多次渲染问题。
+- 第一次渲染，不论是 Vue、React 还是 VanillaJS，一定要同步放到主逻辑中，确保发生在 `DCL` 之前。
+- 避免对 DOM 进行不必要的读操作，因为他们会带来的额外的绘制。
+
+
+
+___
+
+## 29. DOMContentLoaded 事件和 Load 事件的区别？
+
+[DOMContentLoaded-MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/DOMContentLoaded_event)
+
+[Load-MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/load_event)
+
+[再谈 load 与 DOMContentLoaded](https://juejin.cn/post/6844903623583891469)
+
+DOMContentLoaded：当初始的 **HTML** 文档被完全加载和解析完成之后，**`DOMContentLoaded`** 事件被触发，而无需等待样式表、图像和子框架的完全加载。（**html文档加载完毕，并且 html 所引用的内联 js、以及外链 js 的同步代码都执行完毕后触发**。）
+
+Load： 当整个页面及所有依赖资源如样式表和图片，以及js 异步加载的 js、css 、图片都加载完成，将触发`load`事件。它与[`DOMContentLoaded`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/DOMContentLoaded_event)不同，后者只要页面DOM加载完成就触发，无需等待依赖资源的加载。
+
 
 
 ____
