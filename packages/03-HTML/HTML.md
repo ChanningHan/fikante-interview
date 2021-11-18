@@ -130,6 +130,10 @@ ___
 
 **语义化是指根据内容的结构化（内容语义化），选择合适的标签（代码语义化）**。通俗来讲就是用正确的标签做正确的事情。
 
+我们应该使用合适的标签来划分网页内容的结构。html 的本质作用其实就是定义网页文档的结构，一个语义化的文档，能够使页面的结构更加清晰，易于理解。这样不仅有利于开发者的维护和理解，同时也能够使机器对文档内容进行正确的解读。比如说我们常用的 b 标签和 strong 标签，它们在样式上都是文字的加粗，但是 strong 标签拥有强调的语义。
+
+对于一般显示来说，可能我们看上去没有差异，但是对于机器来说，就会有很大的不同。如果用户使用的是屏幕阅读器来访问网页的话，使用 strong 标签就会有明显的语调上的变化，而 b 标签则没有。如果是搜索引擎的爬虫对我们网页进行分析的话，那么它会依赖于 html 标签来确定上下文和各个关键字的权重，一个语义化的文档对爬虫来说是友好的，是有利于爬虫对文档内容解读的，从而有利于我们网站的 SEO 。从 html5 我们可以看出，标准是倾向于以语义化的方式来构建网页的，比如新增了 header 、footer 这些语义标签，删除了 big 、font 这些没有语义的标签。
+
 语义化的优点如下：
 
 - 便于用户阅读，样式丢失也能呈现较好的内容和代码结构
@@ -705,3 +709,67 @@ ___
 
 >  文档同级目录下有小demo
 
+
+
+____
+
+
+
+## 21. attribute 和 property 的区别是什么？
+
+attribute是内容属性（标签属性），property是IDL（接口描述语言）属性，一般来说这两个属性的值是同步的，除自定义属性以外。
+
+内容属性的值通常是字符串，而IDL属性则可能是string、number、boolean。
+
+内容属性需要你在内容（HTML 代码）中设置，而且可以通过 [`element.setAttribute()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/setAttribute) 或 [`element.getAttribute()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getAttribute)来设置。内容属性常常是一个字符串，即使里面的值是一个证书。例如，要将 [``](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input) 元素的 `maxlength` 设置为 42，你需要在元素中调用 `setAttribute("maxlength", "42")` 。
+
+IDL 属性（attribute）也就是一个 JavaScript 属性（property）。你可以使用 JavaScript 属性如 `element.foo` 来设置这些属性。当你需要获取 IDL 属性的值时，IDL 属性总会使用隐含的内容属性的值（可能先经过转换）来返回一个值。同样地，当你设置这个值时，这个值会保存在内容属性中。换句话说，IDL 属性本质上反映了内容属性。
+
+> 需要注意的是，boolean类型的内容属性在赋值时，不是通过true和false来决定的，而是其值是否为空。如果一个布尔值属性存在，则其值是 **true**，如果不存在或值为空字符串，其值是 **false**。比如disabled="false"其实是**true**,disabled=""或不写才表示false。
+
+
+
+___
+
+
+
+## 22. 浏览器内核与JS引擎
+
+浏览器最重要或者说核心的部分是“Rendering Engine”，可大概译为“渲染引擎”，不过我们一般习惯将之称为“浏览器内核”。
+
+| 浏览器  | 内核                      | JS引擎                                                       | 备注                                                         |
+| ------- | ------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| IE      | Trident(<=IE10); EdgeHTML | JScript(<IE9);Chakra(IE9+及Edge)                             | IE、猎豹、360极速、百度浏览器。EdgeHTML是在Trident的基础上删除过时的旧技术支持代码，扩展和优化了对新技术的支持。<br />采用Chrominum为核心的Edge在2020年正式发布。 |
+| Safari  | Webkit/Webkit2            | JSCore/Nitro(4+)                                             | WebKit由苹果研发和开源。Webkit引擎包括了WebCore排版引擎和JSCore解析引擎，均是从KDE的KHTML和KJS引擎衍生而来。<br />Webkit2发布于2010，实现了元件的抽象化，更高效的渲染。 |
+| firefox | Gecko                     | SpiderMonkey(<3.0);<br />TraceMonkey(<3/6);J<br />aegerMonkey(4.0+);<br />最新的IONmonkey（对外接口仍是Spider Monkey） | 这几年稍微没落。                                             |
+| Chrome  | Chromium（WebKit）/Blink  | V8                                                           | 最开始Chromium使用的渲染引擎是fork自Webkit的并进行一些优化。后来由于Webkit2与Chromium的沙箱设计存在冲突，于是联手Opera自研了Blink引擎，逐步脱离Webkit。Blink是Webkit的分支。目前国内大部分国产浏览器最新版都采用Blink内核进行二次开发。 |
+| Opera   | Presto；Blink             | Futhark（9.5-10.2);Carakan（10.5-12.1）<br />都已停止开发    | Opera在2013年V12.16之前使用的是Opera Software公司开发的Presto引擎，之后连同谷歌研发和选择Blink作为Opera浏览器的排版内核。 |
+
+
+
+> Chromium是一个谷歌开源浏览器项目，是Chrome浏览器的基础，其渲染引擎开始使用的是Webkit。
+
+
+
+国产浏览器中部分是单核，大多数为双核：
+
+一、使用的Trident单核，如：2345、世界之窗；
+二、使用Trident+Webkit/Blink双核，如：qq、UC、猎豹、360、百度；
+三、使用Webkit/Blink单核，如：搜狗、遨游。
+
+双核的作用比如360的高速模式和兼容模式，兼容可以切到Trident内核去测试或兼容面向ie开发的网页，且进行支付或网上银行的访问时使用的是Trident内核。
+
+
+
+
+
+
+
+____
+
+
+
+## 参考资料
+
+- https://zhuanlan.zhihu.com/p/398920738
+- 
