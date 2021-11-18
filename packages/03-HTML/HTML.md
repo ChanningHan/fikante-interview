@@ -763,6 +763,53 @@ ___
 
 
 
+____
+
+
+
+## 23. 前端需要注意哪些SEO？
+
+1.  合理的 title、description、keywords：搜索对着三项的权重逐个减小，title 值强调重点即可，重要关键词出现不要超过2次，而且要靠前，不同页面 title 要有所不同；description 把页面内容高度概括，长度合适，不可过分堆砌关键词，不同页面 description 有所不同；keywords 列举出重要关键词即可。
+
+2. 语义化的 HTML 代码，符合 W3C 规范：语义化代码让搜索引擎容易理解网页。
+3. 重要内容 HTML 代码放在最前：搜索引擎抓取 HTML 顺序是从上到下，有的搜索引擎对抓取长度有限制，保证重要内容肯定被抓取。
+4. 重要内容不要用 js 输出：爬虫不会执行 js 获取内容
+5. 少用 iframe：搜索引擎不会抓取 iframe 中的内容
+6. 非装饰性图片必须加 alt
+7. 提高网站速度：网站速度是搜索引擎排序的一个重要指标
+
+
+
+____
+
+
+
+## 24. SGML 、 HTML 、XML 和 XHTML 的区别
+
+https://blog.csdn.net/qq_41385844/article/details/107865520
+
+https://juejin.cn/post/6879954409598664712
+
+SGML：(Standard Generalized Markup Language，标准通用标记语言)，SGML具有非常复杂的文档结构，主要用于大量高度结构化数据的访问和其他各种工业领域，在分类和索引数据中非常有用。但是它不适用于Web数据描述。
+
+HTML：(Hyper Text Markup Language)，超文本标记语言，他继承了SGML的很多优点，但是html是一种界面技术，只使用了SGML中很少的一部分标记，为了便于在计算机上实现，HTML规定的标记是固定的，即HTML语法是不可扩展的。html是一种标记语言，不是一种编程语言。
+
+XML：xml是在html和sgml的基础上诞生的。XML使用一个简单而又灵活的标准格式，可无限扩展标签，为基于Web的应用提供了一个描述数据和交换数据的有效手段。但是，XML并非是用来取代HTML的。如SVG、MathML都是基于XML的。
+HTML着重如何描述将文件显示在浏览器中，而XML与SGML相近，它着重描述如何将数据以结构化方式表示。
+
+XHTML：（eXtensible HyperText Markup Language），是一种标记语言，表现方式与超文本标记语言（html）类似，不过语法上更加严格。由于HTML5标准的诞生，XHTML就没太大意义了。
+从继承关系上讲，HTML是一种基于标准通用标记语言（sgml）的应用，是一种非常灵活的置标语言，而XHTML则基于可扩展标记语言（xml），XML是sgml的一个子集。
+
+
+
+做了个简单的图方便查看：
+
+![image-20211118105023298](https://gitee.com/ChanningGit/image-hosting/raw/master/images/image-20211118105023298.png)
+
+______
+
+## 25.
+
 
 
 ____
