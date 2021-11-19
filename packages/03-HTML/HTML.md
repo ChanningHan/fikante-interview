@@ -43,7 +43,7 @@ ___
     - step
     - required
 - 语义标签
-- 视频和音频（video和audio）
+- 视频和音频（video和audio元素、Audio API、WebRTC）
 - Canvas
 - SVG
 - 地理定位（Geolocation API）

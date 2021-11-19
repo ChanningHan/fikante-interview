@@ -2,6 +2,70 @@
 
 
 
+## 概述
+
+文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。简言之，它会将web页面和脚本或程序语言连接起来。
+
+一个web页面是一个文档。这个文档可以在浏览器窗口或作为HTML源码显示出来。但上述两个情况中都是同一份文档。文档对象模型（DOM）提供了对同一份文档的另一种表现，存储和操作的方式。 DOM是web页面的完全的面向对象表述，它能够使用如 JavaScript等脚本语言进行修改（通过DOM API）。
+
+ [W3C DOM](https://www.w3.org/DOM/) 和[WHATWG DOM](https://dom.spec.whatwg.org/)标准在绝大多数现代浏览器中都有对DOM的基本实现。许多浏览器提供了对W3C标准的扩展，所以在使用时必须注意，文档可能会在多种浏览器上使用不同的DOM来访问。
+
+所有操作和创建web页面的属性，方法和事件都会被组织成对象的形式（例如， `document `对象表示文档本身， `table` 对象实现了特定的 `HTMLTableElement` DOM 接口来访问HTML 表格等）。
+
+API (web 或 XML 页面) = DOM + JS (脚本语言)
+
+DOM 被设计成与特定编程语言相独立，使文档的结构化表述可以通过单一，一致的API获得。尽管我们在本参考文档中会专注于使用JavaScript， 但DOM 也可以使用其他的语言来实现（如Pythom）。
+
+DOM中重要的**数据类型**：
+
+| `document`     | 当一个成员返回 `document` 对象 （例如，元素的 **`ownerDocument`** 属性返回它所属于 `document` ) ，这个对象就是root `document` 对象本身。 [DOM `document` Reference](https://developer.mozilla.org/en-US/docs/Web/API/Document) 一章对 `document` 对象进行了描述。 |
+| -------------- | ------------------------------------------------------------ |
+| `element`      | `element` 是指由 DOM API 中成员返回的类型为 `element` 的一个元素或节点。 例如， [document.createElement()](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createElement) 方法会返回一个 `node` 的对象引用，也就是说这个方法返回了在DOM中创建的 `element`。 `element` 对象实现了 DOM `Element` 接口以及更基本的 `Node` 接口，参考文档将两者都包含在内。 |
+| `nodeList`     | `nodeList` 是一个元素的数组，如从 [document.getElementsByTagName()](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/getElementsByTagName) 方法返回的就是这种类型。 `nodeList` 中的条目由通过下标有两种方式进行访问：<br />- list.item(1) <br />- list[1]<br />两种方式是等价的，第一种方式中 **`item()`** 是 `nodeList` 对象中的单独方法。 后面的方式则使用了经典的数组语法来获取列表中的第二个条目。 |
+| `attribute`    | 当 `attribute` 通过成员函数 (例如，通过 **`createAttribute()`**方法) 返回时，它是一个为属性暴露出专门接口的对象引用。DOM中的属性也是节点，就像元素一样，只不过您可能会很少使用它。 |
+| `namedNodeMap` | `namedNodeMap` 和数组类似，但是条目是由name或index访问的，虽然后一种方式仅仅是为了枚举方便，因为在 list 中本来就没有特定的顺序。 出于这个目的，  `namedNodeMap` 有一个 item() 方法，你也可以从  `namedNodeMap` 添加或移除条目。 |
+
+
+
+- [Element](https://developer.mozilla.org/zh-CN/docs/Web/API/Element)
+
+  - Element是一个通用性非常强的基类，所有 [`Document`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document) 对象下的对象都继承自它。这个接口描述了所有相同种类的元素所普遍具有的方法和属性。一些接口继承自 `Element` 并且增加了一些额外功能的接口描述了具体的行为。例如， [`HTMLElement`](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement) 接口是所有 HTML 元素的基本接口，而 [`SVGElement`](https://developer.mozilla.org/zh-CN/docs/Web/API/SVGElement) 接口是所有 SVG 元素的基础。大多数功能是在这个类的更深层级（hierarchy）的接口中被进一步制定的。
+
+    在 Web 平台的领域以外的语言，比如 XUL，通过 `XULElement` 接口，同样也实现了 `Element` 接口。
+
+- [Node](https://developer.mozilla.org/zh-CN/docs/Web/API/Node)
+
+  - **`Node`** 是一个接口，各种类型的 DOM API 对象会从这个接口继承。它允许我们使用相似的方式对待这些不同类型的对象；比如, 继承同一组方法，或者用同样的方式测试。
+
+    以下接口都从 `Node` 继承其方法和属性：
+
+    [`Document`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document), [`Element`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element), [`Attr`](https://developer.mozilla.org/zh-CN/docs/Web/API/Attr), [`CharacterData`](https://developer.mozilla.org/zh-CN/docs/Web/API/CharacterData) (which [`Text`](https://developer.mozilla.org/zh-CN/docs/Web/API/Text), [`Comment`](https://developer.mozilla.org/zh-CN/docs/Web/API/Comment), and [`CDATASection`](https://developer.mozilla.org/zh-CN/docs/Web/API/CDATASection) inherit), [`ProcessingInstruction` (en-US)](https://developer.mozilla.org/en-US/docs/Web/API/ProcessingInstruction), [`DocumentFragment`](https://developer.mozilla.org/zh-CN/docs/Web/API/DocumentFragment), [`DocumentType`](https://developer.mozilla.org/zh-CN/docs/Web/API/DocumentType), `Notation`, `Entity`, `EntityReference`
+
+    在方法和属性不相关的特定情况下，这些接口可能返回 `null`。它们可能会抛出异常 - 例如，当将子节点添加到不允许子节点存在的节点时。
+
+需要对Element和Node的属性、方法、事件（Node没有）有尽可能全面的认知。
+
+>  DOMString在JS中其实就是String，因为这两者都是utf-16编码的。
+
+
+
+
+
+
+
+### getElementBy与querySelector的区别？
+
+https://www.zhihu.com/question/24702250
+
+| 区别     | getElementByX                                                | querySelector                                                |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 接收参数 | 仅支持单一的id、className、tagName                           | CSS选择符（可以实现复杂的组合条件查询）                      |
+| 返回值   | getElementsBy 系列的返回的是一个 Live Node List，<br />每一次调用 查询结果都会重新对文档进行查询，导致无限循环的问题 | querySelectorAll 返回的是一个 Static Node List，是一个 集合的快照，对文档的任何操作都不会对其产生影响。 |
+
+> document.querySelector()使用深度优先先序遍历进行匹配。
+
+
+
 
 
 ## 一、规范分级
@@ -156,6 +220,22 @@ https://dom.spec.whatwg.org/#callbackdef-eventlistener
 #### DOM 4级
 
 无事件相关。
+
+
+
+____
+
+
+
+## 三、影子DOM
+
+
+
+____
+
+## 四、 WebComponent
+
+
 
 
 
