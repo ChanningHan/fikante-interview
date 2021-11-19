@@ -60,6 +60,7 @@ ___
   - [MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/notification)
   - [简单了解HTML5中的Web Notification桌面通知](https://www.zhangxinxu.com/wordpress/2016/07/know-html5-web-notification/)
   
+- History
 
 
 
@@ -1079,7 +1080,10 @@ https://juejin.cn/post/6844903581649207309
 
 ____
 
-## 32. DOM事件
+## 32. BOM是什么？
+
+
+
 
 
 
