@@ -28,6 +28,12 @@
 <div id="box1" class="box" draggable="true"></div>
 <p>We hold these truths to be <del><em>sacred &amp; undeniable</em></del> <ins>self-evident</ins>.</p>
 <span translate="no">hello</span>
+<br>
+<map name="myMap" id="myMap" onclick="alert('hi')">
+    <area shape="circle"  coords="50,50,100" href="" alt="myArea">
+</map>
+<img usemap="#myMap" src="1.jpeg" alt="" style="width: 100px;height:100px;">testMap</img>
+
 <script>
     const $ = el => document.querySelector(el)
     const box1 = $('#box1');
