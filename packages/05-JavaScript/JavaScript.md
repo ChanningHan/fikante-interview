@@ -105,4 +105,299 @@ ___
 
 ## 4. EventLoop 事件循环
 
+首先事件循环中事件分为**宏任务**与**微任务**。
+
+**宏任务（种类较多）：**
+
+- script的同步代码（注意两个script标签相当于两个宏任务）
+- setTimeout（指的是其中的回掉函数，后面的同理）
+- setInterval
+- requestAnimationFrame（注意其优先级比setTimeout、setInterval高）
+- UI rendering
+- 如浏览器中的点击等等dispatch Event事件（注意冒泡或捕获机制）
+- I/O
+- setImemediate（Node）
+
+**微任务：**
+
+- Promise callback (then,catch,finally)
+- MutationObserver
+- process.nextTick(Node)
+- Object.observe(已废弃)
+
+
+
+### **浏览器中的事件循环**
+
+浏览器中的事件循环的机制可以总结为：
+
+1. 执行主线程上的同步代码（script）
+2. 执行时将需要异步执行的任务划分为**宏任务**和**微任务**并放到对应的事件队列中（注意宏任务队列可能不止一条，由浏览器具体实现划分不同优先级的宏任务队列）
+3. 主线程执行完毕（执行栈为空）
+4. 逐一执行微任务队列中的所有微任务（注意微任务的执行中如果又创建了微任务，也会在本次循环中执行）
+5. 检查是否需要进行UI重新渲染等，进行渲染...
+6. 取出一个宏任务（根据优先级决定从哪个宏任务队列中取）并执行（相当于第一步），循环以上流程，所谓事件循环。
+
+![image-20211203114244423](https://gitee.com/ChanningGit/image-hosting/raw/master/images/image-20211203114244423.png)
+
+
+
+
+
+来段简单又稍微复杂的代码检验一下：
+
+```javascript
+console.log('1');
+
+setTimeout(function() {
+    console.log('2');
+    process.nextTick(function() {
+        console.log('3');
+    })
+    new Promise(function(resolve) {
+        console.log('4');
+        resolve();
+    }).then(function() {
+        console.log('5')
+    })
+})
+process.nextTick(function() {
+    console.log('6');
+})
+new Promise(function(resolve) {
+    console.log('7');
+    resolve();
+}).then(function() {
+    console.log('8')
+})
+
+setTimeout(function() {
+    console.log('9');
+    process.nextTick(function() {
+        console.log('10');
+    })
+    new Promise(function(resolve) {
+        console.log('11');
+        resolve();
+    }).then(function() {
+        console.log('12')
+    })
+})
+
+```
+
+答案：
+
+1 7
+
+6 8
+
+2 4
+
+3 5
+
+9 11
+
+10 12
+
+
+
+#### 难点
+
+需要注意的是：**microtask并不是在macrotask完成之后才会触发**，在回调函数之后，只要执行栈是空的，就会执行microtask。也就是说，macrotask执行期间，执行栈可能是空的（比如在冒泡事件的处理时）。
+
+你以为搞清楚了事件循环吗？看看[Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=wechat_session&utm_medium=social&utm_oi=619928018081157120&from=singlemessage)这里面关于DOM操作的一个例子吧。
+
+```html
+<style type="text/css">
+    .outer {
+        ...
+    }
+
+    .inner {
+        ...
+    }
+</style>
+
+<script>
+        var outer = document.querySelector('.outer'),
+            inner = document.querySelector('.inner'),
+            clickTimes = 0;
+
+        new MutationObserver(() => {
+            console.log('mutate');
+        }).observe(outer, {
+            attributes: true
+        });
+
+        function onClick() {
+            console.log('click');
+
+            setTimeout(() => {
+                console.log('timeout');
+            }, 0);
+
+            Promise.resolve().then(() => {
+                console.log('promise');
+            });
+
+            outer.setAttribute('data-click', clickTimes++);
+        }
+
+        inner.addEventListener('click', onClick);
+        outer.addEventListener('click', onClick);
+
+        // inner.click();
+
+        // console.log('done');
+    </script>
+```
+
+点击内部的inner块，结果是：click, promise, mutate, click, promise, mutate, timeout, timeout
+
+MutationObserver优先级比promise高，虽然在一开始就被定义，但实际上是触发之后才会被添加到microtask队列中，所以先输出了promise。
+
+两个timeout回调都在最后才触发，因为click事件冒泡了，事件派发这个macrotask任务包括了前后两个onClick回调，两个回调函数都执行完之后，才会执行接下来的 setTimeout任务。
+
+期间第一个onClick回调完成后执行栈为空，就马上接着执行microtask队列中的任务。
+
+如果把代码的注释去掉，使用代码自动 click()，思考一下，会输出什么？
+
+click, click, done,  promise, mutate, promise, timeout, timeout。
+
+可以看到，事件处理是同步的，done在连续输出两个click之后才输出。
+
+而mutate只有一个，是因为当前执行第二个onClick回调的时候，microtask队列中已经有一个MutationObserver，它是第一个回调的，因为事件同步的原因没有被及时执行。浏览器会对MutationObserver进行优化，不会重复添加监听回调 。emo～
+
+
+
+### **Node中的事件循环**
+
+在Node环境中，macrotask部分主要多了setImmediate，microtask部分主要多了process.nextTick，而这个nextTick是独立出来自成队列的，优先级高于其他microtask。
+
+不过事件循环的的实现就不太一样了，可以参考 [Node事件文档 ](https://link.zhihu.com/?target=https%3A//nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/)[libuv事件文档](https://link.zhihu.com/?target=http%3A//docs.libuv.org/en/v1.x/design.html)
+
+Node中的事件循环有6个阶段：
+
+- timers：执行`setTimeout()` 和 `setInterval()`中到期的callback
+- I/O callbacks：上一轮循环中有少数的I/Ocallback会被延迟到这一轮的这一阶段执行
+- idle, prepare：仅内部使用
+- poll：最为重要的阶段，执行I/O callback，在适当的条件下会阻塞在这个阶段
+- check：执行setImmediate的callback
+- close callbacks：执行[close事件](https://www.zhihu.com/search?q=close事件&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A46068171})的callback，例如`socket.on("close",func)`
+
+
+
+在每一轮的事件循环都会经过这六个阶段，每个阶段之后都会执行微任务队列中的任务。
+
+![image-20211203140936451](https://gitee.com/ChanningGit/image-hosting/raw/master/images/image-20211203140936451.png)
+
+
+
+来看个神奇的例子：
+
+```js
+process.nextTick(() => console.log(1));
+
+console.log(0);
+
+setTimeout(()=> {
+    console.log('timer1');
+
+    Promise.resolve().then(() => {
+        console.log('promise1');
+    });
+}, 0);
+
+process.nextTick(() => console.log(2));
+
+setTimeout(()=> {
+    console.log('timer2');
+
+    process.nextTick(() => console.log(3));
+
+    Promise.resolve().then(() => {
+        console.log('promise2');
+    });
+}, 0);
+```
+
+
+
+结果是：0，1，2，timer1，timer2，3，promise1，promise2
+
+是的，这里timer1后面是timer2，因为在timer阶段会将所有到期的timer回调一并执行，timer阶段结束后才执行微任务队列中的任务。
+
+
+
+再来看个神奇的例子：
+
+```js
+setTimeout(() => {
+    console.log('timeout');
+}, 0);
+
+setImmediate(() => {
+    console.log('immediate');
+});
+```
+
+![image-20211203143213443](https://gitee.com/ChanningGit/image-hosting/raw/master/images/image-20211203143213443.png)
+
+是的，在这里先输出timeout还是immediate不是绝对的。这是因为在Node中不存在0ms的timer，至少也是1ms。
+
+因此刚进入程序的1ms内，如果没有到期的timer回调需要执行，则跳过timer阶段，后续就到了check阶段执行setImmediate的回调了，也就是说这一结果可能取决于你的CPU怎么样。
+
+
+
+如果把这两个操作放进文件IO的操作里呢？
+
+```js
+let fs = require('fs');
+
+    fs.readFile('./event.html', () => {
+        setTimeout(() => {
+            console.log('timeout');
+        }, 0);
+
+        setImmediate(() => {
+            console.log('immediate');
+        });
+    });
+```
+
+因为这里先读取一个文件让事件循环进入到了poll阶段，poll阶段后面的是check阶段，所以结果就必然是先immediate后timeout了。
+
+
+
+
+
+知道JS的事件循环是怎么样的了，就需要知道怎么才能把它用好：
+
+1. 在microtask中不要放置复杂的处理程序，防止阻塞UI的渲染
+
+2. 可以使用process.nextTick处理一些比较紧急的事情
+
+3. 可以在setTimeout回调中处理上轮事件循环中UI渲染的结果
+
+4. 注意不要滥用[setInterval和setTimeout](https://www.zhihu.com/search?q=setInterval和setTimeout&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A46068171})，它们并不是可以保证能够按时处理的，setInterval甚至还会出现丢帧的情况，可考虑使用 requestAnimationFrame
+
+5. 一些可能会影响到UI的异步操作，可放在promise回调中处理，防止多一轮事件循环导致重复执行UI的渲染
+
+6. 在Node中使用immediate来可能会得到更多的保证
+
+7. 不要纠结
+
+
+
+**好文推荐**：
+
+[这一次，彻底弄懂 JavaScript 执行机制](https://juejin.cn/post/6844903512845860872)
+
+[深入理解JavaScript的事件循环（Event Loop）](https://zhuanlan.zhihu.com/p/46068171)
+
+
+
+
+
 ## 5. CommonJS模块与ES6模块的区别
