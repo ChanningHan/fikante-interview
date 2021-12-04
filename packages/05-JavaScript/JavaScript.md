@@ -430,5 +430,22 @@ let fs = require('fs');
 
 ## 6. CommonJS模块与ES6模块的区别
 
+[CommonJS模块与ES6模块的区别](https://www.cnblogs.com/unclekeith/p/7679503.html)（这里的第二个例子结果有误，经测试结果应该为是1222）
 
 
+
+[Node Modules at War: Why CommonJS and ES Modules Can’t Get Alongredfin.engineering/node-modules-at-war-why-commonjs](https://link.zhihu.com/?target=https%3A//redfin.engineering/node-modules-at-war-why-commonjs-and-es-modules-cant-get-along-9617135eeca1)
+
+可以看下这篇文章，这篇文章深入解释了为什么这两种模块难以互相兼容。在解释这个问题的过程中，作者讲解了这两种模块具体的生命周期：何时加载？何时编译？何时执行？中间如何进行优化避免加载、编译或执行不必要的代码？
+
+CommonJS 是一种模块规范，最初被应用于 Nodejs，成为 Nodejs 的模块规范。
+
+运行在浏览器端的 JavaScript 由于也缺少类似的规范，在 ES6 出来之前，前端也实现了一套相同的模块规范 (例如: AMD)，用来对前端模块进行管理。
+
+自 ES6 起，引入了一套新的 ES6 Module 规范，在语言标准的层面上实现了模块功能，而且实现得相当简单，有望成为浏览器和服务器通用的模块解决方案。但目前浏览器对 ES6 Module 兼容还不太好，我们平时在 Webpack 中使用的 export 和 import，会经过 Babel 转换为 CommonJS 规范。在使用上的差别主要有：
+
+1. CommonJS 模块输出的是一个值的拷贝（浅拷贝），ES6 模块输出的是值的引用。
+2. CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+3. CommonJs 是单个值导出，ES6 Module可以导出多个
+4. CommonJs 是动态语法可以写在判断/语句嵌套里，ES6 Module 静态语法只能写在顶层
+5. CommonJs 的 this 是当前模块，ES6 Module的 this 是 undefined
