@@ -57,11 +57,30 @@ ____
 
 ## 2. 继承
 
+参考[JavaScript常用八种继承方案](https://juejin.cn/post/6844903696111763470)
 
+另见`./继承.js`。
 
+目前主要使用**寄生组合**的方式实现继承，即通过Object.create(Super.prototype)创建父类构造函数的prototype的副本作为子类构造函数的prototype，并将该prototype的constructor指向子类构造函数，然后在子类构造函数中使用call方法借用父类的构造函数继承实例属性。
 
+```js
+function inherits(Super,Sub){
+		const prototype = Object.create(Super.prototype);
+    prototype.constructor = Sub;
+  	Sub.prototype = prototype;
+}
+function SuperType(){
+  //...
+}
+function SubType(){
+  Super.call(this)
+  //...
+}
+inherits(SuperType, SubType)
 
+```
 
+**ES6 Class**的继承中，还会将子类构造函数的__ proto __ 指向父类构造函数，如Sub.__ proto __ = Super。
 
 ____
 

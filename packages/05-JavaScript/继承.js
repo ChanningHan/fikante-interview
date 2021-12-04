@@ -164,7 +164,7 @@ child5.sing('love song');
 function inheritPrototype(Parent, Child) {
     // or myCreate
     const prototype = Object.create(Parent.prototype);
-    // prototype.constructor = Child;
+    prototype.constructor = Child;
     Child.prototype = prototype;
 }
 
