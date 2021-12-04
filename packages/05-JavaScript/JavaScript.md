@@ -10,7 +10,9 @@
 - [「万字总结」熬夜总结50个JS的高级知识点，全都会你就是神！！！](https://juejin.cn/post/7022795467821940773)
 - [这一次，彻底弄懂 JavaScript 执行机制](https://juejin.cn/post/6844903512845860872)
 - [说说原型（prototype）、原型链和原型继承](https://zhuanlan.zhihu.com/p/35790971)
-
+- [「2021」高频前端面试题汇总之JavaScript篇（上）](https://juejin.cn/post/6940945178899251230)
+- [「2021」高频前端面试题汇总之JavaScript篇（下）](https://juejin.cn/post/6941194115392634888)
+- [字节跳动最爱考的前端面试题：JavaScript 基础](https://juejin.cn/post/6934500357091360781)
 
 
 ___
@@ -232,7 +234,7 @@ setTimeout(function() {
 你以为搞清楚了事件循环吗？看看[Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=wechat_session&utm_medium=social&utm_oi=619928018081157120&from=singlemessage)这里面关于DOM操作的一个例子吧。
 
 ```html
-<style type="text/css">
+<style>
     .outer {
         ...
     }
@@ -422,7 +424,15 @@ let fs = require('fs');
 
 
 
+
+___
+
+
+
+
 ## 5. 深浅拷贝
+
+
 
 
 
@@ -432,7 +442,7 @@ let fs = require('fs');
 
 [CommonJS模块与ES6模块的区别](https://www.cnblogs.com/unclekeith/p/7679503.html)（这里的第二个例子结果有误，经测试结果应该为是1222）
 
-
+[CommonJS 和 ES6 Module 究竟有什么区别？](https://juejin.cn/post/6844904080955932680)
 
 [Node Modules at War: Why CommonJS and ES Modules Can’t Get Alongredfin.engineering/node-modules-at-war-why-commonjs](https://link.zhihu.com/?target=https%3A//redfin.engineering/node-modules-at-war-why-commonjs-and-es-modules-cant-get-along-9617135eeca1)
 
