@@ -1,9 +1,9 @@
 /**
- * 
+ *
  * 假设把某股票的价格按照时间先后顺序存储在数组中，
  * 请问买卖该股票一次可能获得的最大利润是多少？
 
- 
+
 
 示例 1:
 
@@ -16,13 +16,13 @@
 输入: [7,6,4,3,1]
 输出: 0
 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
- 
+
 
 限制：
 
 0 <= 数组长度 <= 10^5
 
- * 
+ *
  */
 
 /**
@@ -32,18 +32,18 @@
  * @return {number}
  */
 function maxProfit(prices) {
-    if (!prices || !prices.length) return 0
-    let minPrice = prices[0]
-    let res = 0
+    if (!prices || !prices.length) return 0;
+    let minPrice = prices[0];
+    let res = 0;
     for (let i = 1; i < prices.length; i++) {
-        const profit = prices[i] - minPrice
+        const profit = prices[i] - minPrice;
         if (profit > res) {
-            res = profit
+            res = profit;
         }
 
         if (prices[i] < minPrice) {
-            minPrice = prices[i]
+            minPrice = prices[i];
         }
     }
-    return res
-};
+    return res;
+}

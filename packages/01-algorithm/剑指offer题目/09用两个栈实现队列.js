@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * 用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，
- * 分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )
+ * 分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead操作返回 -1 )
 示例 1：
 
 输入：
@@ -17,47 +17,45 @@
 提示：
 
 1 <= values <= 10000
-最多会对 appendTail、deleteHead 进行 10000 次调用
+最多会对appendTail、deleteHead 进行10000次调用
 
  */
 
-
 /**
- * @decription 添加时插入到栈1，删除时将栈1逐个弹出到栈2，这样栈2的栈顶即队列的队头，
+ * @description 添加时插入到栈1，删除时将栈1逐个弹出到栈2，这样栈2的栈顶即队列的队头，
  * 此时将栈2的栈顶弹出即可完成删除。
  * 插入新元素时依然插入到栈1中。当栈2不为空时，每次删除都从栈2弹出，
  * 当栈2为空时，再将栈1逐个推出到栈2，如果栈1也为空，则删除失败，返回-1；
  */
-var CQueue = function() {
-    this.stack1 = []
-    this.stack2 = []
+let CQueue = function () {
+    this.stack1 = [];
+    this.stack2 = [];
 };
 
-/** 
+/**
  * @param {number} value
  * @return {void}
  */
-CQueue.prototype.appendTail = function(value) {
-    this.stack1.push(value)
-    return null
+CQueue.prototype.appendTail = function (value) {
+    this.stack1.push(value);
+    return null;
 };
 
 /**
  * @return {number}
  */
-CQueue.prototype.deleteHead = function() {
+CQueue.prototype.deleteHead = function () {
     if (!this.stack2.length) {
         while (this.stack1.length) {
-            this.stack2.push(this.stack1.pop())
+            this.stack2.push(this.stack1.pop());
         }
     }
 
     if (!this.stack2.length) {
-        return -1
+        return -1;
     }
 
-    return this.stack2.pop()
-
+    return this.stack2.pop();
 };
 
 /**
@@ -68,30 +66,24 @@ CQueue.prototype.deleteHead = function() {
  */
 
 function test() {
-    const obj = new CQueue()
+    const obj = new CQueue();
 
-    const methods = ["appendTail", "deleteHead", "deleteHead"]
-    const params = [
-        [3],
-        [],
-        []
-    ]
+    const methods = ['appendTail', 'deleteHead', 'deleteHead'];
+    const params = [[3], [], []];
 
-    const output = [null, null, 3, -1]
+    const output = [null, null, 3, -1];
 
-    const res = [null]
+    const res = [null];
 
     methods.forEach((method, index) => {
-        res.push(obj[method](params[index][0]))
-    })
-    isPass = !res.some((item, index) => item !== output[index])
+        res.push(obj[method](params[index][0]));
+    });
+    const isPass = !res.some((item, index) => item !== output[index]);
     console.log(res);
-    console.log(isPass ? 'pass' : 'failed')
+    console.log(isPass ? 'pass' : 'failed');
 }
 
-test()
-
-
+test();
 
 /**
  * 用两个队列实现栈：

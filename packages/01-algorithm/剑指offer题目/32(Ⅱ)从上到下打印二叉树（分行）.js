@@ -1,27 +1,31 @@
 /**
- * 
- * 从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。
+ *
+ * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
 
- 
 
-例如:
-给定二叉树: [3,9,20,null,null,15,7],
 
-    3
-   / \
-  9  20
-    /  \
-   15   7
-返回：
+ 例如:
+ 给定二叉树:[3,9,20,null,null,15,7],
 
-[3,9,20,15,7]
- 
+ 3
+ / \
+ 9  20
+ /  \
+ 15   7
+ 返回其层次遍历结果：
 
-提示：
+ [
+ [3],
+ [9,20],
+ [15,7]
+ ]
 
-节点总数 <= 1000
 
- * 
+ 提示：
+
+ 节点总数 <= 1000
+
+ *
  */
 
 /**
@@ -33,20 +37,39 @@
  */
 /**
  * @param {TreeNode} root
- * @return {number[]}
+ * @return {number[][]}
  */
-var levelOrder = function(root) {
-    if (!root) return []
-    const queue = []
-    const res = []
-    queue.push(root)
+let levelOrder = function (root) {
+    if (!root) return [];
+    const queue = [];
+    const res = [[]];
+    // 当前行未打印数量
+    let current = 0;
+    // 下一行未打印数量
+    let next = 0;
 
+    queue.push(root);
+    current = 1;
     while (queue.length) {
-        const node = queue.shift()
-        res.push(node.val)
-        node.left && queue.push(node.left)
-        node.right && queue.push(node.right)
+        const node = queue.shift();
+        res[res.length - 1].push(node.val);
+        current--;
+
+        if (node.left) {
+            queue.push(node.left);
+            next++;
+        }
+        if (node.right) {
+            queue.push(node.right);
+            next++;
+        }
+
+        if (!current) {
+            next && res.push([]);
+            current = next;
+            next = 0;
+        }
     }
 
-    return res
+    return res;
 };

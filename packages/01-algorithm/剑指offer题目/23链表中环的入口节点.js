@@ -1,15 +1,15 @@
 /**
- * 
+ *
  * 给定一个链表，返回链表开始入环的第一个节点。
- *  从链表的头节点开始沿着 next 指针进入环的第一个节点为环的入口节点。如果链表无环，则返回 null。
+ *  从链表的头节点开始沿着 next 指针进入环的第一个节点为环的入口节点。如果链表无环，则返回null。
 
 为了表示给定链表中的环，
-我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 
+我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。
 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
 
 说明：不允许修改给定的链表。
 
- 
+
 
 示例 1：
 
@@ -18,7 +18,7 @@
 输入：head = [3,2,0,-4], pos = 1
 输出：返回索引为 1 的链表节点
 解释：链表中有一个环，其尾部连接到第二个节点。
-示例 2：
+示例2：
 
 
 
@@ -32,18 +32,18 @@
 输入：head = [1], pos = -1
 输出：返回 null
 解释：链表中没有环。
- 
+
 
 提示：
 
 链表中节点的数目范围在范围 [0, 104] 内
 -105 <= Node.val <= 105
 pos 的值为 -1 或者链表中的一个有效索引
- 
+
 
 进阶：是否可以使用 O(1) 空间解决此题？
 
- * 
+ *
  */
 
 /**
@@ -60,86 +60,86 @@ pos 的值为 -1 或者链表中的一个有效索引
  * 那么x+y-n = y,即x=n，因此快指针需要先走环的节点数量步，然后同时开始走，即可在入口处相遇。
  * 由于还需要得到环的节点数量，才能进而找到环的入口。
  * 要得到环的节点数很简单，在判断是否存在环时记录相遇时的节点，然后再将指针逐步移动并计数，直到又走到相遇节点，则得到环的节点数量。
- * 
+ *
  * @param {ListNode} head
  * @return {ListNode}
  */
-var detectCycle = function(head) {
-    if (head === null) return null
-    let slow = head
-    let fast = head
-
+let detectCycle = function (head) {
+    if (head === null) return null;
+    let slow = head;
+    let fast = head;
 
     // 找到相遇节点
     do {
-        if (!slow.next || !fast.next || !fast.next.next) return null
-        slow = slow.next
-        fast = fast.next.next
-    } while (slow !== fast)
+        if (!slow.next || !fast.next || !fast.next.next) return null;
+        slow = slow.next;
+        fast = fast.next.next;
+    } while (slow !== fast);
 
     // 得到环的长度
-    let circleLength = 0
+    let circleLength = 0;
     do {
-        slow = slow.next
-        circleLength++
-    }
-    while (fast !== slow)
+        slow = slow.next;
+        circleLength++;
+    } while (fast !== slow);
 
     // 快慢指针重新指向头节点，找出入口节点
-    slow = head
-    fast = head
+    slow = head;
+    fast = head;
     for (let i = 0; i < circleLength; i++) {
-        fast = fast.next
+        fast = fast.next;
     }
     while (fast !== slow) {
-        fast = fast.next
-        slow = slow.next
+        fast = fast.next;
+        slow = slow.next;
     }
-    return slow
-
+    return slow;
 };
-
 
 class ListNode {
     val;
+
     next = null;
+
     constructor(val) {
-        this.val = val
+        this.val = val;
     }
 }
 
 function test() {
-    const testArr = [{
-        input: {
-            list: [3, 2, 0, -4],
-            pos: 1,
+    const testArr = [
+        {
+            input: {
+                list: [3, 2, 0, -4],
+                pos: 1,
+            },
+            output: 2,
         },
-        output: 2
-    }]
+    ];
 
     testArr.forEach((item, index) => {
-        console.log(`test${index+1},${JSON.stringify(item)}`)
-        let preNode
-        let headNode
-        let enterNode
+        console.log(`test${index + 1},${JSON.stringify(item)}`);
+        let preNode;
+        let headNode;
+        let enterNode;
         item.input.list.forEach((i, index2) => {
-            const node = new ListNode(i)
+            const node = new ListNode(i);
             if (index2 === item.input.pos) {
-                enterNode = node
+                enterNode = node;
             }
             if (!preNode) {
-                headNode = node
-                preNode = headNode
-                return
+                headNode = node;
+                preNode = headNode;
+                return;
             }
-            preNode.next = node
-            preNode = node
-        })
-        preNode.next = enterNode
-        const res = detectCycle(headNode)
-        console.log(res)
-        console.log(res.val === item.output ? 'pass' : 'fail')
-    })
+            preNode.next = node;
+            preNode = node;
+        });
+        preNode.next = enterNode;
+        const res = detectCycle(headNode);
+        console.log(res);
+        console.log(res.val === item.output ? 'pass' : 'fail');
+    });
 }
 
-test()
+test();

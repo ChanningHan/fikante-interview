@@ -1,6 +1,6 @@
 /**
- * 
- * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+ *
+ * 一只青蛙一次可以跳上1级台阶，也可以跳上2级台阶。求该青蛙跳上一个 n级的台阶总共有多少种跳法。
 
 答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
 
@@ -20,7 +20,7 @@
 
 0 <= n <= 100
 
- * 
+ *
  */
 
 /**
@@ -29,30 +29,29 @@
  * @param {number} n
  * @return {number}
  */
-var numWays = function(n) {
-    let prevNum1 = 1
-    let prevNum2 = 1
-    if (n < 2) return 1
-    let res
+const numWays = function (n) {
+    let prevNum1 = 1;
+    let prevNum2 = 1;
+    if (n < 2) return 1;
+    let res;
     for (let i = 2; i <= n; i++) {
-        res = prevNum1 + prevNum2
-        if (res > 1000000007) res -= 1000000007
+        res = prevNum1 + prevNum2;
+        if (res > 1000000007) res -= 1000000007;
 
-        prevNum2 = prevNum1
-        prevNum1 = res
+        prevNum2 = prevNum1;
+        prevNum1 = res;
     }
-    return res
+    return res;
 };
 
-
 function test(func) {
-    const inputArr = [2, 7, 0]
-    const outputArr = [2, 21, 1]
+    const inputArr = [2, 7, 0];
+    const outputArr = [2, 21, 1];
     inputArr.forEach((input, index) => {
-        const res = func(input)
-        console.log(res === outputArr[index] ? 'pass' : 'failed', index + 1)
-        console.log(`res1:${res}`)
-    })
+        const res = func(input);
+        console.log(res === outputArr[index] ? 'pass' : 'failed', index + 1);
+        console.log(`res1:${res}`);
+    });
 }
 
-test(numWays)
+test(numWays);

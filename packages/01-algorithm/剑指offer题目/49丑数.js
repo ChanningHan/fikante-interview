@@ -1,26 +1,25 @@
 /**
- * 
+ *
  * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。
  * 求按从小到大的顺序的第 n 个丑数。
 
- 
+
 
 示例:
 
 输入: n = 10
 输出: 12
 解释: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 是前 10 个丑数。
-说明:  
+说明:
 
-1 是丑数。
-n 不超过1690。
+1是丑数。
+n不超过1690。
 
- * 
+ *
  */
 
-
 /**
- * @description 
+ * @description
  * 可以用最小堆+去重来构造一个丑数最小堆，
  * 当堆大小达到n时取出堆顶即可。其时间复杂度为O(n*(logn+log3n))=O(nlogn)和空间复杂度O(n)，
  * 时间和空间复杂度都不太优，因此可以采用动态规划来进行优化：
@@ -31,7 +30,7 @@ n 不超过1690。
  * 其意义是用指针指向的丑数乘以该指针代表的质因数（分别为2，3，5），
  * dp[i] = {
  *      1                                   i=1
- *      min(dp(p2)*2, dp(p3)*3, dp(p5)*5)   2<=i<=n               
+ *      min(dp(p2)*2, dp(p3)*3, dp(p5)*5)   2<=i<=n
  * }
  * 求出dp[i]后，分别于dp(p2)*2、dp(p3)*3、dp(p5)*5比较，如果相等，要将对应的指针+1，
  * 这一步需要全部比较的原因是需要去重，比如当p2=3,p3=2时，3*2和2*3是相等的，
@@ -44,28 +43,28 @@ n 不超过1690。
  * @return {number}
  */
 function nthUglyNumber(n) {
-    if (n < 1) throw new Error('error input < 1')
+    if (n < 1) throw new Error('error input < 1');
 
-    const dp = [0, 1]
-    let p2 = 1
-    let p3 = 1
-    let p5 = 1
+    const dp = [0, 1];
+    let p2 = 1;
+    let p3 = 1;
+    let p5 = 1;
 
     for (let i = 2; i <= n; i++) {
-        const num2 = dp[p2] * 2
-        const num3 = dp[p3] * 3
-        const num5 = dp[p5] * 5
-        dp[i] = Math.min(num2, num3, num5)
+        const num2 = dp[p2] * 2;
+        const num3 = dp[p3] * 3;
+        const num5 = dp[p5] * 5;
+        dp[i] = Math.min(num2, num3, num5);
         if (dp[i] === num2) {
-            p2++
+            p2++;
         }
         if (dp[i] === num3) {
-            p3++
+            p3++;
         }
         if (dp[i] === num5) {
-            p5++
+            p5++;
         }
     }
 
-    return dp[n]
-};
+    return dp[n];
+}

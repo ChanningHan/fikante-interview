@@ -1,7 +1,7 @@
 /**
  * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。
  * 输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。
- * 例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。  
+ * 例如，数组[3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。
 
 示例 1：
 
@@ -20,16 +20,16 @@ function test(func) {
         [2, 2, 2, 0, 1],
         [1, 1, 1, 0, 1],
         [-1, -1, -1, -1, -1],
-    ]
+    ];
 
-    const outputArr = [1, 0, 0, -1]
+    const outputArr = [1, 0, 0, -1];
 
     inputArr.forEach((input, index) => {
-        const res = func(input)
-        const output = outputArr[index]
-        console.log(`test${index++}`, `input: ${input},output:${output},res:${res}`)
-        console.log(res === output ? 'pass' : 'failed')
-    })
+        const res = func(input);
+        const output = outputArr[index];
+        console.log(`test${index++}`, `input: ${input},output:${output},res:${res}`);
+        console.log(res === output ? 'pass' : 'failed');
+    });
 }
 
 /**
@@ -43,51 +43,50 @@ function test(func) {
  * @param {number[]} numbers
  * @return {number}
  */
-var minArray = function(numbers) {
-    if (!numbers.length) throw new Error('numbers.length is zero')
+let minArray = function (numbers) {
+    if (!numbers.length) throw new Error('numbers.length is zero');
 
-    let index1 = 0
-    let index2 = numbers.length - 1
-    if (numbers[index1] < numbers[index2]) return numbers[index1]
+    let index1 = 0;
+    let index2 = numbers.length - 1;
+    if (numbers[index1] < numbers[index2]) return numbers[index1];
 
-    let distance = index2 - index1
-    let middleIndex
+    let distance = index2 - index1;
+    let middleIndex;
     while (distance > 1) {
-        middleIndex = (index1 + index2) / 2
+        middleIndex = (index1 + index2) / 2;
         if (numbers[index1] === numbers[index2] && numbers[index1] === numbers[middleIndex]) {
-            return findMinInOrder(numbers, index1, index2)
+            // eslint-disable-next-line no-use-before-define
+            return findMinInOrder(numbers, index1, index2);
         }
         if (numbers[index1] <= numbers[middleIndex]) {
-            index1 = middleIndex
+            index1 = middleIndex;
         } else if (numbers[index2] >= numbers[middleIndex]) {
-            index2 = middleIndex
+            index2 = middleIndex;
         }
-        distance = index2 - index1
+        distance = index2 - index1;
     }
-    return numbers[index2]
-
+    return numbers[index2];
 };
 
 /**
  * @description 顺序查找范围内的最小数字
- * @param {numberp[]} numbers 
- * @param {number} start 
- * @param {number} end 
+ * @param {number[]} numbers
+ * @param {number} start
+ * @param {number} end
  */
 function findMinInOrder(numbers, start, end) {
-    let min = numbers[start]
+    let min = numbers[start];
     for (let i = start + 1; i <= end; i++) {
         if (numbers[i] < min) {
-            min = numbers[i]
-            return min
+            min = numbers[i];
+            return min;
         }
     }
 
-    return min
+    return min;
 }
 
 // test(minArray)
-
 
 /**
  * @description 也是二分法。首先最小数字会存在于第二个递增数组中，
@@ -100,21 +99,21 @@ function findMinInOrder(numbers, start, end) {
  * @return {number}
  */
 function minArray2(numbers) {
-    let low = 0
-    let hight = numbers.length - 1
-    if (numbers[low] < numbers[hight]) return numbers[low]
+    let low = 0;
+    let hight = numbers.length - 1;
+    if (numbers[low] < numbers[hight]) return numbers[low];
 
     while (low < hight) {
-        let middleIndex = ~~((hight + low) / 2)
+        let middleIndex = ~~((hight + low) / 2);
         if (numbers[hight] > numbers[middleIndex]) {
-            hight = middleIndex
+            hight = middleIndex;
         } else if (numbers[hight] < numbers[middleIndex]) {
-            low = middleIndex + 1
+            low = middleIndex + 1;
         } else {
-            hight -= 1
+            hight -= 1;
         }
     }
-    return numbers[low]
+    return numbers[low];
 }
 
-test(minArray2)
+test(minArray2);

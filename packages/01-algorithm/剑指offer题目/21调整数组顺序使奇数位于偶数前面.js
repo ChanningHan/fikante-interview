@@ -1,42 +1,46 @@
 /**
- * 
+ *
  * 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，
  * 使得所有奇数位于数组的前半部分，所有偶数位于数组的后半部分。
 
- 
+
 
 示例：
 
-输入：nums = [1,2,3,4]
-输出：[1,3,2,4] 
+输入：nums =[1,2,3,4]
+输出：[1,3,2,4]
 注：[3,1,2,4] 也是正确的答案之一。
- 
+
 
 提示：
 
 0 <= nums.length <= 50000
 0 <= nums[i] <= 10000
 
- * 
+ *
  */
 
 function test(fn) {
-    const testArr = [{
-        input: [1, 2, 3, 4],
-        output: [1, 3, 2, 4]
-    }]
+    const testArr = [
+        {
+            input: [1, 2, 3, 4],
+            output: [1, 3, 2, 4],
+        },
+    ];
 
     testArr.forEach((i, index) => {
-        console.log(`test${index+1},testMsg:${JSON.stringify(i)}`);
-        const res = fn(i.input)
-        console.log(`res:${res}`)
+        console.log(`test${index + 1},testMsg:${JSON.stringify(i)}`);
+        const res = fn(i.input);
+        console.log(`res:${res}`);
 
-        console.log(res.some((resItem, resIndex) => resItem !== i.output[resIndex]) ? 'fail' : 'pass')
-    })
+        console.log(
+            res.some((resItem, resIndex) => resItem !== i.output[resIndex]) ? 'fail' : 'pass'
+        );
+    });
 }
 
 function isEven(num) {
-    return num % 2 !== 0
+    return num % 2 !== 0;
 }
 
 /**
@@ -46,27 +50,27 @@ function isEven(num) {
  * @return {number[]}
  */
 function exchange(nums) {
-    if (nums.length === 0) return nums
+    if (nums.length === 0) return nums;
 
-    let pointer1 = 0
-    let pointer2 = nums.length - 1
+    let pointer1 = 0;
+    let pointer2 = nums.length - 1;
 
     while (pointer1 < pointer2) {
         while (!isEven(nums[pointer2]) && pointer2 >= 0) {
-            pointer2--
+            pointer2--;
         }
         while (isEven(nums[pointer1]) && pointer1 < nums.length) {
-            pointer1++
+            pointer1++;
         }
         if (pointer1 >= pointer2) {
-            break
+            break;
         }
-        let temp = nums[pointer1]
-        nums[pointer1] = nums[pointer2]
-        nums[pointer2] = temp
+        let temp = nums[pointer1];
+        nums[pointer1] = nums[pointer2];
+        nums[pointer2] = temp;
     }
 
-    return nums
-};
+    return nums;
+}
 
-test(exchange)
+test(exchange);

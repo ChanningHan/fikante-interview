@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
 
 示例1：
@@ -10,7 +10,7 @@
 
 0 <= 链表长度 <= 1000
 
- * 
+ *
  */
 
 /**
@@ -28,20 +28,20 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
-var mergeTwoLists = function(l1, l2) {
+const mergeTwoLists = function (l1, l2) {
     if (l1 === null) {
-        return l2
+        return l2;
     }
     if (l2 === null) {
-        return l1
+        return l1;
     }
 
-    let mergedHead = l1.val < l2.val ? l1 : l2
+    let mergedHead = l1.val < l2.val ? l1 : l2;
     if (l1.val < l2.val) {
-        mergedHead.next = mergeTwoLists(l1.next, l2)
+        mergedHead.next = mergeTwoLists(l1.next, l2);
     } else {
-        mergedHead.next = mergeTwoLists(l1, l2.next)
+        mergedHead.next = mergeTwoLists(l1, l2.next);
     }
 
-    return mergedHead
+    return mergedHead;
 };

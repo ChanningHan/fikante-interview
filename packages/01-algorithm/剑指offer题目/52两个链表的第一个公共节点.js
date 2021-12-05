@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * 输入两个链表，找出它们的第一个公共节点。
 
 如下面的两个链表：
@@ -8,7 +8,7 @@
 
 在节点 c1 开始相交。
 
- 
+
 
 示例 1：
 
@@ -16,19 +16,22 @@
 
 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3
 输出：Reference of the node with value = 8
-输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。
- 
-
-示例 2：
-
+输入解释：相交节点的值为 8 （注意，如果两个列表相交则不能为 0）。
+ 从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,0,1,8,4,5]。
+ 在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。
 
 
-输入：intersectVal = 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+示例2：
+
+
+
+输入：intersectVal= 2, listA = [0,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
 输出：Reference of the node with value = 2
-输入解释：相交节点的值为 2 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。
- 
+输入解释：相交节点的值为 2 （注意，如果两个列表相交则不能为 0）。从各自的表头开始算起，
+ 链表 A 为 [0,9,1,2,4]，链表 B 为 [3,2,4]。在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。
 
-示例 3：
+
+示例3：
 
 
 
@@ -36,7 +39,7 @@
 输出：null
 输入解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。
 解释：这两个链表不相交，因此返回 null。
- 
+
 
 注意：
 
@@ -46,7 +49,7 @@
 程序尽量满足 O(n) 时间复杂度，且仅用 O(1) 内存。
 本题与主站 160 题相同：https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
 
- * 
+ *
  */
 
 /**
@@ -66,35 +69,33 @@
  * @param {ListNode} headB
  * @return {ListNode}
  */
-var getIntersectionNode = function(headA, headB) {
-    const stackA = []
-    const stackB = []
-    let nodeA = headA
-    let nodeB = headB
+let getIntersectionNode = function (headA, headB) {
+    const stackA = [];
+    const stackB = [];
+    let nodeA = headA;
+    let nodeB = headB;
     while (nodeA || nodeB) {
         if (nodeA) {
-            stackA.push(nodeA)
-            nodeA = nodeA.next
+            stackA.push(nodeA);
+            nodeA = nodeA.next;
         }
         if (nodeB) {
-            stackB.push(nodeB)
-            nodeB = nodeB.next
+            stackB.push(nodeB);
+            nodeB = nodeB.next;
         }
     }
-    let publicNode = null
+    let publicNode = null;
     while (stackA.length && stackB.length) {
-        nodeA = stackA.pop()
-        nodeB = stackB.pop()
+        nodeA = stackA.pop();
+        nodeB = stackB.pop();
         if (nodeA === nodeB) {
-            publicNode = nodeA
+            publicNode = nodeA;
         } else {
             break;
         }
     }
-    return publicNode
+    return publicNode;
 };
-
-
 
 /**
  * Definition for singly-linked list.
@@ -109,55 +110,54 @@ var getIntersectionNode = function(headA, headB) {
  * 那么减去较长的链表比较短的链表多出来的节点数量后，
  * 再一起开始遍历，当遍历到的节点相同时则为第一个公共节点。
  * 简单来说就是较长的A链表先走n步，再一起开始走，n = A.length - B.length,
- * 链表的长度可以先走一遍得到。 
+ * 链表的长度可以先走一遍得到。
  * @param {ListNode} headA
  * @param {ListNode} headB
  * @return {ListNode}
  */
-var getIntersectionNode2 = function(headA, headB) {
-    if (!headA || !headB) return null
-    let nodeA = headA
-    let nodeB = headB
-    let aLength = 0
-    let bLength = 0
+let getIntersectionNode2 = function (headA, headB) {
+    if (!headA || !headB) return null;
+    let nodeA = headA;
+    let nodeB = headB;
+    let aLength = 0;
+    let bLength = 0;
     while (nodeA || nodeB) {
         if (nodeA) {
-            nodeA = nodeA.next
-            aLength++
+            nodeA = nodeA.next;
+            aLength++;
         }
         if (nodeB) {
-            nodeB = nodeB.next
-            bLength++
+            nodeB = nodeB.next;
+            bLength++;
         }
     }
-    let offset = aLength - bLength
-    const offsetCache = offset
-    nodeA = headA
-    nodeB = headB
+    let offset = aLength - bLength;
+    const offsetCache = offset;
+    nodeA = headA;
+    nodeB = headB;
     while (offset !== 0) {
         if (offset < 0) {
-            nodeB = nodeB.next
-            offset++
+            nodeB = nodeB.next;
+            offset++;
         } else {
-            nodeA = nodeA.next
-            offset--
+            nodeA = nodeA.next;
+            offset--;
         }
     }
 
     if (offsetCache > 0) {
-        nodeB = headB
+        nodeB = headB;
     } else {
-        nodeA = headA
+        nodeA = headA;
     }
 
     while (nodeA && nodeB) {
         if (nodeA === nodeB) {
-            return nodeA
-        } else {
-            nodeA = nodeA.next
-            nodeB = nodeB.next
+            return nodeA;
         }
+        nodeA = nodeA.next;
+        nodeB = nodeB.next;
     }
 
-    return null
+    return null;
 };

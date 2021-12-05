@@ -50,20 +50,20 @@ function kthLargest(root, k) {
     if (!root || k <= 0) throw new Error('error input');
     let count = 0;
     let resNode = null;
-    function postOrderTraverse(node) {
+    function inOrderTraverse(node) {
         if (!node) return;
         if (node.right) {
-            postOrderTraverse(node.right);
+            inOrderTraverse(node.right);
         }
         if (++count === k) {
             resNode = node;
             return;
         }
         if (node.left) {
-            postOrderTraverse(node.left);
+            inOrderTraverse(node.left);
         }
     }
 
-    postOrderTraverse(root);
+    inOrderTraverse(root);
     return resNode ? resNode.val : 0;
 }

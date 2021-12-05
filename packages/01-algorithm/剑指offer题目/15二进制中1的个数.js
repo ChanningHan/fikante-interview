@@ -1,87 +1,88 @@
 /**
  * 编写一个函数，输入是一个无符号整数（以二进制串的形式），
- * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为 汉明重量).）。
+ * 返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量).）。
 
- 
+
 
 提示：
 请注意，在某些语言（如 Java）中，没有无符号整数类型。在这种情况下，输入和输出都将被指定为有符号整数类型，并且不应影响您的实现，因为无论整数是有符号的还是无符号的，其内部的二进制表示形式都是相同的。
-在 Java 中，编译器使用 二进制补码 记法来表示有符号整数。因此，在上面的 示例 3 中，输入表示有符号整数 -3。
- 
+在 Java 中，编译器使用 二进制补码 记法来表示有符号整数。因此，在上面的示例 3中，输入表示有符号整数 -3。
+
 
 示例 1：
 
 输入：n = 11 (控制台输入 00000000000000000000000000001011)
 输出：3
-解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 '1'。
+解释：输入的二进制串 00000000000000000000000000001011中，共有三位为 '1'。
 示例 2：
 
 输入：n = 128 (控制台输入 00000000000000000000000010000000)
 输出：1
-解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 '1'。
+解释：输入的二进制串 00000000000000000000000010000000中，共有一位为 '1'。
 示例 3：
 
 输入：n = 4294967293 (控制台输入 11111111111111111111111111111101，部分语言中 n = -3）
 输出：31
 解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 '1'。
- 
+
 
 提示：
 
 输入必须是长度为 32 的 二进制串 。
 
- * 
+ *
  */
 
 function test(func) {
-    const testArr = [{
+    const testArr = [
+        {
             input: 11,
-            output: 3
+            output: 3,
         },
         {
             input: 128,
-            output: 1
+            output: 1,
         },
         {
             input: 4294967293,
-            output: 31
-        }
-    ]
+            output: 31,
+        },
+    ];
 
-    let passCount = 0
+    let passCount = 0;
     testArr.forEach((item, index) => {
-        const res = func(item.input)
-        console.log(`test${index+1},${JSON.stringify(item)}, res:${res}`);
-        const isPass = res === item.output
-        console.log(isPass ? 'pass' : 'failed')
-        isPass && passCount++
-    })
-    console.log(`totolPass: ${passCount}/${testArr.length}`)
+        const res = func(item.input);
+        console.log(`test${index + 1},${JSON.stringify(item)}, res:${res}`);
+        const isPass = res === item.output;
+        console.log(isPass ? 'pass' : 'failed');
+        isPass && passCount++;
+    });
+    console.log(`totolPass: ${passCount}/${testArr.length}`);
 }
 
 /**
  * @description 输入数字与1做与运算，如果结果为1，则说明最后一位为1，如果为0则说明最后一位为0，
  * 因此，每次与1做与运算后进行右移，直到该数字为0。这种做法只适用于正数，因为为负数时右移左边会补1，陷入死循环中。
  * 这里的测例3实际上是负数，会陷入死循环
- * 
+ *
  * @param {number} n - a positive integer
  * @return {number}
  */
 function hammingWeight1(n) {
-    let res = 0
+    let res = 0;
     if (n < 0) {
-        console.log('n < 0')
-        return 0
+        console.log('n < 0');
+        return 0;
     }
     while (n) {
         n & 1 && res++;
         // >>有符号右位移，负数时左边填充1；>>> 零填充右位移
-        n = n >>> 1
+        n >>>= 1;
     }
-    return res
-};
+    return res;
+}
 
-test(hammingWeight1)
+test(hammingWeight1);
 
 /**
  * @description
@@ -91,18 +92,17 @@ test(hammingWeight1)
  * @return {number}
  */
 function hammingWeight2(n) {
-    let flag = 1
-    let res = 0
+    let flag = 1;
+    let res = 0;
     while (flag) {
         n & flag && res++;
-        flag = flag << 1
+        flag <<= 1;
     }
 
-    return res
-};
+    return res;
+}
 
-test(hammingWeight2)
-
+test(hammingWeight2);
 
 /**
  * @description 前面的方法循环次数为32次，但还有更优的方法：
@@ -116,12 +116,12 @@ test(hammingWeight2)
  * @return {number}
  */
 function hammingWeight3(n) {
-    let res = 0
+    let res = 0;
     while (n) {
-        n = (n - 1) & n
-        res++
+        n &= n - 1;
+        res++;
     }
-    return res
-};
+    return res;
+}
 
-test(hammingWeight3)
+test(hammingWeight3);

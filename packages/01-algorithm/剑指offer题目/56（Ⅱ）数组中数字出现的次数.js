@@ -1,9 +1,9 @@
 /**
- * 
+ *
  * 在一个数组 nums 中除一个数字只出现一次之外，
  * 其他数字都出现了三次。请找出那个只出现一次的数字。
 
- 
+
 
 示例 1：
 
@@ -13,14 +13,14 @@
 
 输入：nums = [9,1,7,9,7,9,7]
 输出：1
- 
+
 
 限制：
 
 1 <= nums.length <= 10000
 1 <= nums[i] < 2^31
 
- * 
+ *
  */
 
 /**
@@ -31,27 +31,27 @@
  * @return {number}
  */
 function singleNumber(nums) {
-    if (!nums || !nums.length) throw new Error('nums is empty')
-    let binarySum = []
+    if (!nums || !nums.length) throw new Error('nums is empty');
+    let binarySum = [];
     for (let i = 0; i < nums.length; i++) {
-        const numStr = nums[i].toString(2)
+        const numStr = nums[i].toString(2);
         for (let j = numStr.length - 1; j >= 0; j--) {
-            const index = numStr.length - 1 - j
-            if (binarySum[index] === undefined) binarySum[index] = 0
-            binarySum[index] += ~~numStr[j]
+            const index = numStr.length - 1 - j;
+            if (binarySum[index] === undefined) binarySum[index] = 0;
+            binarySum[index] += ~~numStr[j];
         }
     }
     for (let i = 0; i < binarySum.length; i++) {
         if (binarySum[i] === undefined) {
-            binarySum[i] = 0
+            binarySum[i] = 0;
         }
-        binarySum[i] = binarySum[i] % 3
+        binarySum[i] %= 3;
     }
 
-    const res = parseInt(binarySum.reverse().join(''), 2)
+    const res = parseInt(binarySum.reverse().join(''), 2);
 
-    return res
-};
+    return res;
+}
 
-singleNumber([3, 4, 3, 3])
-singleNumber([9, 1, 7, 9, 7, 9, 7])
+singleNumber([3, 4, 3, 3]);
+singleNumber([9, 1, 7, 9, 7, 9, 7]);

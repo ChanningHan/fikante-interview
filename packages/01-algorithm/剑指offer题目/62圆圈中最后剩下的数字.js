@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * 0,1,···,n-1这n个数字排成一个圆圈，从数字0开始，0
  * 每次从这个圆圈里删除第m个数字（删除后从下一个数字开始计数）。
  * 求出这个圆圈里剩下的最后一个数字。
@@ -8,24 +8,24 @@
 从数字0开始每次删除第3个数字，
 则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3。
 
- 
+
 
 示例 1：
 
 输入: n = 5, m = 3
-输出: 3
+输出:3
 示例 2：
 
 输入: n = 10, m = 17
-输出: 2
- 
+输出:2
+
 
 限制：
 
-1 <= n <= 10^5
+1 <= n<= 10^5
 1 <= m <= 10^6
 
- * 
+ *
  */
 
 /**
@@ -35,22 +35,19 @@
  * @return {number}
  */
 function lastRemaining(n, m) {
-    if (n < 1 || m < 1) return -1
-    let circleList = []
+    if (n < 1 || m < 1) return -1;
+    let circleList = [];
     for (let i = 0; i < n; i++) {
-        circleList.push(i)
+        circleList.push(i);
     }
 
-    let currentIndex = 0
+    let currentIndex = 0;
     while (circleList.length > 1) {
-        currentIndex = (currentIndex + m - 1) % circleList.length
-        circleList.splice(currentIndex, 1)
-
+        currentIndex = (currentIndex + m - 1) % circleList.length;
+        circleList.splice(currentIndex, 1);
     }
-    return circleList[0]
-};
-
-
+    return circleList[0];
+}
 
 /**
  * @description 动态规划。
@@ -79,13 +76,12 @@ function lastRemaining(n, m) {
  * @return {number}
  */
 function lastRemaining2(n, m) {
-    if (n === 1) return 0
-    return (m + lastRemaining2(n - 1, m)) % n
-};
+    if (n === 1) return 0;
+    return (m + lastRemaining2(n - 1, m)) % n;
+}
 
 console.log(lastRemaining2(5, 3));
 console.log(lastRemaining2(10000, 120659));
-
 
 /**
  * @description 动态规划。
@@ -114,12 +110,12 @@ console.log(lastRemaining2(10000, 120659));
  * @return {number}
  */
 function lastRemaining3(n, m) {
-    let last = 0
+    let last = 0;
     for (let i = 2; i <= n; i++) {
-        last = (last + m) % i
+        last = (last + m) % i;
     }
-    return last
-};
+    return last;
+}
 
 console.log(lastRemaining3(5, 3));
 console.log(lastRemaining3(800002, 120659));

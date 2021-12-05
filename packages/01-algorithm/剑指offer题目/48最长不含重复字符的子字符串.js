@@ -53,7 +53,7 @@ function lengthOfLongestSubstring(s) {
     for (let j = 0; j < s.length; j++) {
         // 上一次出现s[j]的位置
         const i = dic.get(s[j]);
-        const distance = j - i
+        const distance = j - i;
         dic.set(s[j], j);
         if (i === undefined || distance > temp) {
             temp++;
@@ -66,5 +66,5 @@ function lengthOfLongestSubstring(s) {
         }
     }
 
-    return res
+    return res;
 }

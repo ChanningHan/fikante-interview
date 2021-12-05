@@ -1,10 +1,10 @@
 /**
- * 
+ *
  * 输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。
 
 序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
 
- 
+
 
 示例 1：
 
@@ -14,15 +14,14 @@
 
 输入：target = 15
 输出：[[1,2,3,4,5],[4,5,6],[7,8]]
- 
+
 
 限制：
 
 1 <= target <= 10^5
 
- * 
+ *
  */
-
 
 /**
  * @description 使用两个指针，
@@ -38,37 +37,36 @@
  * @return {number[][]}
  */
 function findContinuousSequence(target) {
-    const res = []
-    let p1 = 1
-    let p2 = 2
-
+    const res = [];
+    let p1 = 1;
+    let p2 = 2;
 
     function createArr(p1, p2) {
-        const arr = []
+        const arr = [];
         for (let i = p1; i <= p2; i++) {
-            arr.push(i)
+            arr.push(i);
         }
-        return arr
+        return arr;
     }
 
-    let sum = p1 + p2
+    let sum = p1 + p2;
     while (p1 < p2) {
         if (sum < target) {
-            p2++
-            sum += p2
+            p2++;
+            sum += p2;
         } else if (sum > target) {
-            sum -= p1
-            p1++
+            sum -= p1;
+            p1++;
         } else {
-            res.push(createArr(p1, p2))
-            sum -= p1
-            p1++
-            p2++
-            sum += p2
+            res.push(createArr(p1, p2));
+            sum -= p1;
+            p1++;
+            p2++;
+            sum += p2;
         }
     }
 
-    return res
-};
+    return res;
+}
 
-findContinuousSequence(15)
+findContinuousSequence(15);

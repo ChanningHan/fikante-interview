@@ -1,11 +1,11 @@
 /**
- * 
+ *
  * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，
  * 找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
 
 叶子节点 是指没有子节点的节点。
 
- 
+
 
 示例 1：
 
@@ -23,7 +23,7 @@
 
 输入：root = [1,2], targetSum = 0
 输出：[]
- 
+
 
 提示：
 
@@ -31,9 +31,8 @@
 -1000 <= Node.val <= 1000
 -1000 <= targetSum <= 1000
 
- * 
+ *
  */
-
 
 /**
  * Definition for a binary tree node.
@@ -44,13 +43,16 @@
  * }
  */
 function TreeNode(val, left, right) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
 }
 
 function sum(arr) {
-    return arr.reduce((total, item) => total += item)
+    return arr.reduce((total, item) => {
+        total += item;
+        return total;
+    });
 }
 
 /**
@@ -58,23 +60,23 @@ function sum(arr) {
  * @param {number} target
  * @return {number[][]}
  */
-var pathSum = function(root, target) {
-    const path = []
-    const res = []
+let pathSum = function (root, target) {
+    const path = [];
+    const res = [];
 
     function recursion(node) {
         if (!node) return;
-        path.push(node.val)
+        path.push(node.val);
         if (!node.left && !node.right) {
-            tsum(path) === target && res.push([...path])
+            sum(path) === target && res.push([...path]);
         } else {
-            recursion(node.left)
-            recursion(node.right)
+            recursion(node.left);
+            recursion(node.right);
         }
-        path.pop()
+        path.pop();
     }
 
-    recursion(root)
+    recursion(root);
 
-    return res
+    return res;
 };
