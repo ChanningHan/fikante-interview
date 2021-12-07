@@ -24,5 +24,6 @@ module.exports = {
         'func-names': 'off',
         'no-shadow': 'off',
         'max-classes-per-file': 'off',
+        'no-restricted-properties': 'off',
     },
 };
