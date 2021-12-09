@@ -10,5 +10,6 @@
 - [深入响应性原理（官方）](https://v3.cn.vuejs.org/guide/reactivity.html)
 
 ## 3. Diff算法
+- [详解vue的diff算法](https://juejin.cn/post/6844903607913938951)
 
 ## 4. Vue3 Virtual DOM 优化
