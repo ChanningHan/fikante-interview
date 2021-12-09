@@ -373,8 +373,6 @@ setImmediate(() => {
 
 因此刚进入程序的1ms内，如果没有到期的timer回调需要执行，则跳过timer阶段，后续就到了check阶段执行setImmediate的回调了，也就是说这一结果可能取决于你的CPU怎么样。
 
-
-
 如果把这两个操作放进文件IO的操作里呢？
 
 ```js
