@@ -6,6 +6,8 @@
 
 
 ## 2. Vue3响应式原理
+墙裂阅读官方的原理说明，看完有自己实现的冲动。
+- [深入响应性原理（官方）](https://v3.cn.vuejs.org/guide/reactivity.html)
 
 ## 3. Diff算法
 
