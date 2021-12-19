@@ -25,5 +25,6 @@ module.exports = {
         'no-shadow': 'off',
         'max-classes-per-file': 'off',
         'no-restricted-properties': 'off',
+        'import/extensions': 'off',
     },
 };

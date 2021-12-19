@@ -111,7 +111,7 @@ let mergeTwoLists2 = function (list1, list2) {
 
         node = node.next;
     }
-    node.next = list1 || list2;
+    node.next = list1 || list2 || null;
 
     return root.next;
 };
