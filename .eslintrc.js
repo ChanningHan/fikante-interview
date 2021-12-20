@@ -26,5 +26,6 @@ module.exports = {
         'max-classes-per-file': 'off',
         'no-restricted-properties': 'off',
         'import/extensions': 'off',
+        'no-multi-assign': 'off',
     },
 };

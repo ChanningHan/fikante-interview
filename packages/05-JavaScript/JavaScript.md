@@ -61,7 +61,7 @@ ____
 
 参考[JavaScript常用八种继承方案](https://juejin.cn/post/6844903696111763470)
 
-另见`./继承.js`。
+另见`./01-继承.js`。
 
 目前主要使用**寄生组合**的方式实现继承，即通过Object.create(Super.prototype)创建父类构造函数的prototype的副本作为子类构造函数的prototype，并将该prototype的constructor指向子类构造函数，然后在子类构造函数中使用call方法借用父类的构造函数继承实例属性。
 
@@ -421,22 +421,9 @@ let fs = require('fs');
 
 
 
-
-
-___
-
-
-
-
-## 5. 深浅拷贝
-
-
-
-
-
 <hr/>
 
-## 6. CommonJS模块与ES6模块的区别
+## 5. CommonJS模块与ES6模块的区别
 
 [CommonJS模块与ES6模块的区别](https://www.cnblogs.com/unclekeith/p/7679503.html)（这里的第二个例子结果有误，经测试结果应该为是1222）
 
