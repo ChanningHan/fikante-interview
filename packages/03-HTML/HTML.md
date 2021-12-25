@@ -974,8 +974,6 @@ ____
 
 ## 28. 如何解决FOUC（无样式内容闪烁）问题
 
-
-
 [Web性能优化：FOUC](https://zhuanlan.zhihu.com/p/90172207)
 
 [前端魔法堂：解秘FOUC](https://segmentfault.com/a/1190000009134290)

@@ -11,6 +11,7 @@ class ListNode {
 
 /**
  * @param {number[]} nums
+ * @return {ListNode}
  * */
 function createList(nums) {
     let root = null;
