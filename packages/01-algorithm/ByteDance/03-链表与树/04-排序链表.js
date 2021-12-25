@@ -30,7 +30,7 @@
 -105 <= Node.val <= 105
 * */
 
-const { ListNode, createList, logNodeList } = require('./util');
+const { ListNode, createList, logNodeList } = require('./utils');
 
 /**
  * @param {ListNode} list1

@@ -78,7 +78,7 @@ listB 中节点数目为 n
  * }
  */
 
-const { createList, logNodeList } = require('./util');
+const { createList } = require('./utils');
 // import { createList } from './util';
 
 /**
@@ -118,4 +118,4 @@ let getIntersectionNode = function (headA, headB) {
     return null;
 };
 
-// console.log(getIntersectionNode(createList([4, 1, 8, 4, 5]), createList([5, 6, 1, 8, 4, 5])));
+console.log(getIntersectionNode(createList([4, 1, 8, 4, 5]), createList([5, 6, 1, 8, 4, 5])));

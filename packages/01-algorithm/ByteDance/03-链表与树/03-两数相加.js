@@ -33,7 +33,7 @@
  *
  * */
 
-const { ListNode, createList, logNodeList } = require('./util');
+const { ListNode } = require('./utils');
 
 /**
  * Definition for singly-linked list.
@@ -47,7 +47,7 @@ const { ListNode, createList, logNodeList } = require('./util');
  * @param {ListNode} l2
  * @return {ListNode}
  */
-let addTwoNumbers = function (l1, l2) {
+const addTwoNumbers = function (l1, l2) {
     const root = new ListNode(0);
     let node = root;
     let carry = 0;
