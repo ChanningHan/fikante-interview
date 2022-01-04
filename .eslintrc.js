@@ -27,5 +27,6 @@ module.exports = {
         'no-restricted-properties': 'off',
         'import/extensions': 'off',
         'no-multi-assign': 'off',
+        'no-underscore-dangle': 'off',
     },
 };

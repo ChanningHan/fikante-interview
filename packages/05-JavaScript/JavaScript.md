@@ -13,6 +13,7 @@
 - [「2021」高频前端面试题汇总之JavaScript篇（上）](https://juejin.cn/post/6940945178899251230)
 - [「2021」高频前端面试题汇总之JavaScript篇（下）](https://juejin.cn/post/6941194115392634888)
 - [字节跳动最爱考的前端面试题：JavaScript 基础](https://juejin.cn/post/6934500357091360781)
+- [[从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理](https://segmentfault.com/a/1190000012925872)](https://segmentfault.com/a/1190000012925872)
 
 
 ___
@@ -75,7 +76,7 @@ function SuperType(){
   //...
 }
 function SubType(){
-  Super.call(this)
+  SuperType.call(this)
   //...
 }
 inherits(SuperType, SubType)

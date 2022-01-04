@@ -68,3 +68,35 @@ function lengthOfLongestSubstring(s) {
 
     return res;
 }
+
+function maxStr(str) {
+    if (!str) return 0;
+
+    let start = 0;
+    let max = 1;
+    let charMap = {};
+
+    for (let i = 0; i < str.length; i++) {
+        const prevCharIndex = charMap[str[i]];
+
+        const currentLength = i - start + 1;
+        if (prevCharIndex >= 0) {
+            const samCharLength = i - prevCharIndex + 1;
+            if (currentLength < samCharLength) {
+                max = Math.max(max, currentLength);
+            } else {
+                start = i;
+            }
+        } else {
+            max = Math.max(max, currentLength);
+        }
+
+        charMap[str[i]] = [i];
+    }
+
+    return max;
+}
+
+console.log(lengthOfLongestSubstring('abcabc'));
+console.log(maxStr('aabcaabc'));
+console.log(maxStr('bbbbb'));
